@@ -60,33 +60,6 @@ local function UpdateGuildMessage()
    guildMotD = GetGuildRosterMOTD()
 end
 
-<<<<<<< HEAD
-local function Update(self, event, ...)   
-   if not GuildFrame then LoadAddOn("Blizzard_GuildUI") UpdateGuildXP() end
-   -- our guild xp changed, recalculate it
-   if event == "GUILD_XP_UPDATE" then UpdateGuildXP() end
-   -- our guild message of the day changed
-   if event == "GUILD_MOTD" or event == "PLAYER_ENTERING_WORLD" then UpdateGuildMessage() end
-   -- an event occured that could change the guild roster, so request update
-   if event ~= "GUILD_ROSTER_UPDATE" then GuildRoster() end
-      
-   -- received an updated event, but we are already updating the table
-   if self.update == true then return end
-
-   -- lock to prevent multiple updates simultaniously
-   self.update = true
-   if IsInGuild() then
-      BuildGuildTable()
-      
-      Text:SetFormattedText(displayString, hexa..L.datatext_guild..hexb, totalOnline)
-   else
-      local red = RED_FONT_COLOR_CODE
-      Text:SetText(red..L.datatext_noguild..hexb)
-   end
-   
-   self:SetAllPoints(Text)
-   self.update = false
-=======
 local function Update(self, event, ...)
 	if event == "PLAYER_ENTERING_WORLD" then
 		self:UnregisterEvent("PLAYER_ENTERING_WORLD")
@@ -100,13 +73,13 @@ local function Update(self, event, ...)
 			local connected = select(9, GetGuildRosterInfo(i))
 			if connected then totalOnline = totalOnline + 1 end
 		end	
-		Text:SetFormattedText(displayString, L.datatext_guild, totalOnline)
+      Text:SetFormattedText(displayString, hexa..L.datatext_guild..hexb, totalOnline)
 	else
-		Text:SetText(L.datatext_noguild)
+      local red = RED_FONT_COLOR_CODE
+      Text:SetText(red..L.datatext_noguild..hexb)
 	end
 	
 	self:SetAllPoints(Text)
->>>>>>> upstream/master
 end
    
 local menuFrame = CreateFrame("Frame", "TukuiGuildRightClickMenu", UIParent, "UIDropDownMenuTemplate")
