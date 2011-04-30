@@ -60,6 +60,7 @@ local function UpdateGuildMessage()
    guildMotD = GetGuildRosterMOTD()
 end
 
+<<<<<<< HEAD
 local function Update(self, event, ...)   
    if not GuildFrame then LoadAddOn("Blizzard_GuildUI") UpdateGuildXP() end
    -- our guild xp changed, recalculate it
@@ -85,6 +86,27 @@ local function Update(self, event, ...)
    
    self:SetAllPoints(Text)
    self.update = false
+=======
+local function Update(self, event, ...)
+	if event == "PLAYER_ENTERING_WORLD" then
+		self:UnregisterEvent("PLAYER_ENTERING_WORLD")
+		if IsInGuild() and not GuildFrame then LoadAddOn("Blizzard_GuildUI") end
+	end
+	
+	if IsInGuild() then
+		totalOnline = 0
+		local name, rank, level, zone, note, officernote, connected, status, class
+		for i = 1, GetNumGuildMembers() do
+			local connected = select(9, GetGuildRosterInfo(i))
+			if connected then totalOnline = totalOnline + 1 end
+		end	
+		Text:SetFormattedText(displayString, L.datatext_guild, totalOnline)
+	else
+		Text:SetText(L.datatext_noguild)
+	end
+	
+	self:SetAllPoints(Text)
+>>>>>>> upstream/master
 end
    
 local menuFrame = CreateFrame("Frame", "TukuiGuildRightClickMenu", UIParent, "UIDropDownMenuTemplate")
@@ -147,6 +169,7 @@ Stat:SetScript("OnMouseUp", function(self, btn)
 end)
 
 Stat:SetScript("OnEnter", function(self)
+<<<<<<< HEAD
    if InCombatLockdown() or not IsInGuild() then return end
       
    local name, rank, level, zone, note, officernote, connected, status, class
@@ -202,6 +225,70 @@ Stat:SetScript("OnEnter", function(self)
       end
    end
    GameTooltip:Show()
+=======
+	if InCombatLockdown() or not IsInGuild() then return end
+	
+	UpdateGuildMessage()
+	BuildGuildTable()
+		
+	local name, rank, level, zone, note, officernote, connected, status, class
+	local zonec, classc, levelc
+	local online = totalOnline
+		
+	local anchor, panel, xoff, yoff = T.DataTextTooltipAnchor(Text)
+	GameTooltip:SetOwner(panel, anchor, xoff, yoff)
+	GameTooltip:ClearLines()
+	GameTooltip:AddDoubleLine(string.format(guildInfoString, GetGuildInfo('player'), GetGuildLevel()), string.format(guildInfoString2, L.datatext_guild, online, #guildTable),tthead.r,tthead.g,tthead.b,tthead.r,tthead.g,tthead.b)
+	
+	if guildMotD ~= "" then GameTooltip:AddLine(' ') GameTooltip:AddLine(string.format(guildMotDString, GUILD_MOTD, guildMotD), ttsubh.r, ttsubh.g, ttsubh.b, 1) end
+	
+	local col = T.RGBToHex(ttsubh.r, ttsubh.g, ttsubh.b)
+	GameTooltip:AddLine' '
+	if GetGuildLevel() ~= 25 then
+		UpdateGuildXP()
+		
+		local currentXP, nextLevelXP, percentTotal = unpack(guildXP[0])
+		local dailyXP, maxDailyXP, percentDaily = unpack(guildXP[1])
+		
+		if currentXP ~= 0 then
+			GameTooltip:AddLine(string.format(col..GUILD_EXPERIENCE_CURRENT, "|r |cFFFFFFFF"..T.ShortValue(currentXP), T.ShortValue(nextLevelXP), percentTotal))
+			GameTooltip:AddLine(string.format(col..GUILD_EXPERIENCE_DAILY, "|r |cFFFFFFFF"..T.ShortValue(dailyXP), T.ShortValue(maxDailyXP), percentDaily))
+		end
+	end
+	
+	local _, _, standingID, barMin, barMax, barValue = GetGuildFactionInfo()
+	if standingID ~= 8 then -- Not Max Rep
+		barMax = barMax - barMin
+		barValue = barValue - barMin
+		barMin = 0
+		GameTooltip:AddLine(string.format("%s:|r |cFFFFFFFF%s/%s (%s%%)",col..COMBAT_FACTION_CHANGE, T.ShortValue(barValue), T.ShortValue(barMax), math.ceil((barValue / barMax) * 100)))
+	end
+	
+	if online > 1 then
+		GameTooltip:AddLine(' ')
+		for i = 1, #guildTable do
+			if online <= 1 then
+				if online > 1 then GameTooltip:AddLine(format("+ %d More...", online - modules.Guild.maxguild),ttsubh.r,ttsubh.g,ttsubh.b) end
+				break
+			end
+
+			name, rank, level, zone, note, officernote, connected, status, class = unpack(guildTable[i])
+			if connected and name ~= T.myname then
+				if GetRealZoneText() == zone then zonec = activezone else zonec = inactivezone end
+				classc, levelc = (CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS)[class], GetQuestDifficultyColor(level)
+				
+				if IsShiftKeyDown() then
+					GameTooltip:AddDoubleLine(string.format(nameRankString, name, rank), zone, classc.r, classc.g, classc.b, zonec.r, zonec.g, zonec.b)
+					if note ~= "" then GameTooltip:AddLine(string.format(noteString, note), ttsubh.r, ttsubh.g, ttsubh.b, 1) end
+					if officernote ~= "" then GameTooltip:AddLine(string.format(officerNoteString, officernote), ttoff.r, ttoff.g, ttoff.b ,1) end
+				else
+					GameTooltip:AddDoubleLine(string.format(levelNameStatusString, levelc.r*255, levelc.g*255, levelc.b*255, level, name, status), zone, classc.r,classc.g,classc.b, zonec.r,zonec.g,zonec.b)
+				end
+			end
+		end
+	end
+	GameTooltip:Show()
+>>>>>>> upstream/master
 end)
 
 Stat:SetScript("OnLeave", function() GameTooltip:Hide() end)
@@ -213,8 +300,11 @@ end)
 Stat:RegisterEvent("GUILD_ROSTER_SHOW")
 Stat:RegisterEvent("PLAYER_ENTERING_WORLD")
 Stat:RegisterEvent("GUILD_ROSTER_UPDATE")
-Stat:RegisterEvent("GUILD_XP_UPDATE")
 Stat:RegisterEvent("PLAYER_GUILD_UPDATE")
+<<<<<<< HEAD
 Stat:RegisterEvent("GUILD_MOTD")
 Stat:SetScript("OnEvent", Update)
 UpdateGuildMessage()
+=======
+Stat:SetScript("OnEvent", Update)
+>>>>>>> upstream/master
