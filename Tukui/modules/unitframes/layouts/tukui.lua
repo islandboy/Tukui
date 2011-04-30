@@ -159,6 +159,14 @@ local function Shared(self, unit)
 
 		-- portraits
 		if (C["unitframes"].charportrait == true) then
+         local portrait = CreateFrame("PlayerModel", nil, health)
+         portrait.PostUpdate = function(self) self:SetAlpha(0) self:SetAlpha(0.35) end -- change the 0.15 to the alphavalue you want
+         portrait:SetAllPoints(health)
+         table.insert(self.__elements, T.HidePortrait)
+         self.Portrait = portrait
+      end
+      --[[
+		if (C["unitframes"].charportrait == true) then
 			local portrait = CreateFrame("PlayerModel", self:GetName().."_Portrait", self)
 			portrait:SetFrameLevel(8)
 			if T.lowversion then
@@ -202,6 +210,7 @@ local function Shared(self, unit)
 			
 			self.WeakenedSoul = ws
 		end
+      --]]
 		
 		--[[ leaving here just in case someone want to use it, we now use our own Alt Power Bar.
 		-- alt power bar

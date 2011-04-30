@@ -45,58 +45,62 @@ local function chatsetup()
 		FCF_SetChatWindowFontSize(nil, frame, 12)
 		
 		-- rename windows general and combat log
-		if i == 1 then FCF_SetWindowName(frame, "G, S & W") end
+		if i == 1 then FCF_SetWindowName(frame, "General") end
 		if i == 2 then FCF_SetWindowName(frame, "Log") end
 	end
 	
 	ChatFrame_RemoveAllMessageGroups(ChatFrame1)
-	ChatFrame_RemoveChannel(ChatFrame1, L.chat_trade) -- erf, it seem we need to localize this now
-	ChatFrame_RemoveChannel(ChatFrame1, L.chat_general) -- erf, it seem we need to localize this now
-	ChatFrame_RemoveChannel(ChatFrame1, L.chat_defense) -- erf, it seem we need to localize this now
-	ChatFrame_RemoveChannel(ChatFrame1, L.chat_recrutment) -- erf, it seem we need to localize this now
-	ChatFrame_RemoveChannel(ChatFrame1, L.chat_lfg) -- erf, it seem we need to localize this now
-	ChatFrame_AddMessageGroup(ChatFrame1, "SAY")
-	ChatFrame_AddMessageGroup(ChatFrame1, "EMOTE")
-	ChatFrame_AddMessageGroup(ChatFrame1, "YELL")
-	ChatFrame_AddMessageGroup(ChatFrame1, "GUILD")
-	ChatFrame_AddMessageGroup(ChatFrame1, "OFFICER")
-	ChatFrame_AddMessageGroup(ChatFrame1, "GUILD_ACHIEVEMENT")
-	ChatFrame_AddMessageGroup(ChatFrame1, "WHISPER")
-	ChatFrame_AddMessageGroup(ChatFrame1, "MONSTER_SAY")
-	ChatFrame_AddMessageGroup(ChatFrame1, "MONSTER_EMOTE")
-	ChatFrame_AddMessageGroup(ChatFrame1, "MONSTER_YELL")
-	ChatFrame_AddMessageGroup(ChatFrame1, "MONSTER_WHISPER")
-	ChatFrame_AddMessageGroup(ChatFrame1, "MONSTER_BOSS_EMOTE")
-	ChatFrame_AddMessageGroup(ChatFrame1, "MONSTER_BOSS_WHISPER")
-	ChatFrame_AddMessageGroup(ChatFrame1, "PARTY")
-	ChatFrame_AddMessageGroup(ChatFrame1, "PARTY_LEADER")
-	ChatFrame_AddMessageGroup(ChatFrame1, "RAID")
-	ChatFrame_AddMessageGroup(ChatFrame1, "RAID_LEADER")
-	ChatFrame_AddMessageGroup(ChatFrame1, "RAID_WARNING")
-	ChatFrame_AddMessageGroup(ChatFrame1, "BATTLEGROUND")
-	ChatFrame_AddMessageGroup(ChatFrame1, "BATTLEGROUND_LEADER")
-	ChatFrame_AddMessageGroup(ChatFrame1, "BG_HORDE")
-	ChatFrame_AddMessageGroup(ChatFrame1, "BG_ALLIANCE")
-	ChatFrame_AddMessageGroup(ChatFrame1, "BG_NEUTRAL")
-	ChatFrame_AddMessageGroup(ChatFrame1, "SYSTEM")
-	ChatFrame_AddMessageGroup(ChatFrame1, "ERRORS")
-	ChatFrame_AddMessageGroup(ChatFrame1, "AFK")
-	ChatFrame_AddMessageGroup(ChatFrame1, "DND")
-	ChatFrame_AddMessageGroup(ChatFrame1, "IGNORED")
-	ChatFrame_AddMessageGroup(ChatFrame1, "ACHIEVEMENT")
-	ChatFrame_AddMessageGroup(ChatFrame1, "BN_WHISPER")
-	ChatFrame_AddMessageGroup(ChatFrame1, "BN_CONVERSATION")
+   ChatFrame_RemoveChannel(ChatFrame1, L.chat_trade)
+	ChatFrame_RemoveChannel(ChatFrame1, L.chat_general)
+   --[[
+	ChatFrame_RemoveChannel(ChatFrame1, L.chat_defense)
+	ChatFrame_RemoveChannel(ChatFrame1, L.chat_recrutment)
+	ChatFrame_RemoveChannel(ChatFrame1, L.chat_lfg)
+	--]]
 				
 	-- Setup the spam chat frame
 	ChatFrame_RemoveAllMessageGroups(ChatFrame3)
-	ChatFrame_AddChannel(ChatFrame3, L.chat_trade) -- erf, it seem we need to localize this now
-	ChatFrame_AddChannel(ChatFrame3, L.chat_general) -- erf, it seem we need to localize this now
-	ChatFrame_AddChannel(ChatFrame3, L.chat_defense) -- erf, it seem we need to localize this now
-	ChatFrame_AddChannel(ChatFrame3, L.chat_recrutment) -- erf, it seem we need to localize this now
-	ChatFrame_AddChannel(ChatFrame3, L.chat_lfg) -- erf, it seem we need to localize this now
-			
+   --[[
+	ChatFrame_AddChannel(ChatFrame3, L.chat_defense)
+	ChatFrame_AddChannel(ChatFrame3, L.chat_recrutment)
+	ChatFrame_AddChannel(ChatFrame3, L.chat_lfg)
+	--]]
+	ChatFrame_AddMessageGroup(ChatFrame3, "GUILD")
+	ChatFrame_AddMessageGroup(ChatFrame3, "OFFICER")
+	ChatFrame_AddMessageGroup(ChatFrame3, "GUILD_ACHIEVEMENT")
+	ChatFrame_AddMessageGroup(ChatFrame3, "WHISPER")
+	ChatFrame_AddMessageGroup(ChatFrame3, "MONSTER_SAY")
+	ChatFrame_AddMessageGroup(ChatFrame3, "MONSTER_EMOTE")
+	ChatFrame_AddMessageGroup(ChatFrame3, "MONSTER_YELL")
+	ChatFrame_AddMessageGroup(ChatFrame3, "MONSTER_WHISPER")
+	ChatFrame_AddMessageGroup(ChatFrame3, "MONSTER_BOSS_EMOTE")
+	ChatFrame_AddMessageGroup(ChatFrame3, "MONSTER_BOSS_WHISPER")
+	ChatFrame_AddMessageGroup(ChatFrame3, "PARTY")
+	ChatFrame_AddMessageGroup(ChatFrame3, "PARTY_LEADER")
+	ChatFrame_AddMessageGroup(ChatFrame3, "RAID")
+	ChatFrame_AddMessageGroup(ChatFrame3, "RAID_LEADER")
+	ChatFrame_AddMessageGroup(ChatFrame3, "RAID_WARNING")
+	ChatFrame_AddMessageGroup(ChatFrame3, "BATTLEGROUND")
+	ChatFrame_AddMessageGroup(ChatFrame3, "BATTLEGROUND_LEADER")
+	ChatFrame_AddMessageGroup(ChatFrame3, "BG_HORDE")
+	ChatFrame_AddMessageGroup(ChatFrame3, "BG_ALLIANCE")
+	ChatFrame_AddMessageGroup(ChatFrame3, "BG_NEUTRAL")
+	ChatFrame_AddMessageGroup(ChatFrame3, "BN_WHISPER")
+	ChatFrame_AddMessageGroup(ChatFrame3, "BN_CONVERSATION")
+  		
 	-- Setup the right chat
 	ChatFrame_RemoveAllMessageGroups(ChatFrame4)
+	ChatFrame_AddChannel(ChatFrame4, L.chat_trade)
+	ChatFrame_AddChannel(ChatFrame4, L.chat_general)
+   ChatFrame_AddMessageGroup(ChatFrame4, "SAY")
+   ChatFrame_AddMessageGroup(ChatFrame4, "EMOTE")
+   ChatFrame_AddMessageGroup(ChatFrame4, "YELL")
+   ChatFrame_AddMessageGroup(ChatFrame4, "SYSTEM")
+   ChatFrame_AddMessageGroup(ChatFrame4, "ERRORS")
+   ChatFrame_AddMessageGroup(ChatFrame4, "AFK")
+   ChatFrame_AddMessageGroup(ChatFrame4, "DND")
+   ChatFrame_AddMessageGroup(ChatFrame4, "IGNORED")
+   ChatFrame_AddMessageGroup(ChatFrame4, "ACHIEVEMENT")
 	ChatFrame_AddMessageGroup(ChatFrame4, "COMBAT_XP_GAIN")
 	ChatFrame_AddMessageGroup(ChatFrame4, "COMBAT_HONOR_GAIN")
 	ChatFrame_AddMessageGroup(ChatFrame4, "COMBAT_FACTION_CHANGE")

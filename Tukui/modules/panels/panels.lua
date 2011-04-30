@@ -74,16 +74,26 @@ ltpetbg1:SetFrameStrata("BACKGROUND")
 ltpetbg1:SetFrameLevel(0)
 ltpetbg1:SetAlpha(0)
 
+--Forte
+local Forte = CreateFrame("Frame", "Forte", UIParent)
+Forte:CreatePanel("Default", 1, 1, "BOTTOM", TukuiBar1, "TOP", 0, 5)
+Forte:SetWidth((T.buttonsize * 28) + (T.buttonspacing * 3))
+Forte:SetHeight((T.buttonsize * 1))
+Forte:SetFrameStrata("BACKGROUND")
+Forte:SetFrameLevel(1)
+--T.CreateShadow(Forte)
+
 -- INVISIBLE FRAME COVERING BOTTOM ACTIONBARS JUST TO PARENT UF CORRECTLY
 local invbarbg = CreateFrame("Frame", "InvTukuiActionBarBackground", UIParent)
 if T.lowversion then
 	invbarbg:SetPoint("TOPLEFT", TukuiBar1)
 	invbarbg:SetPoint("BOTTOMRIGHT", TukuiBar1)
-	TukuiBar2:Hide()
-	TukuiBar3:Hide()
+   TukuiBar2:Hide()
+   TukuiBar3:Hide()
 else
-	invbarbg:SetPoint("TOPLEFT", TukuiBar2)
-	invbarbg:SetPoint("BOTTOMRIGHT", TukuiBar3)
+   --invbarbg:SetPoint("TOPLEFT", TukuiBar2)
+   invbarbg:SetPoint("TOPLEFT", Forte)
+   invbarbg:SetPoint("BOTTOMRIGHT", TukuiBar3)
 end
 
 -- LEFT VERTICAL LINE

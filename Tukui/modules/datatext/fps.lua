@@ -15,13 +15,33 @@ if C["datatext"].fps_ms and C["datatext"].fps_ms > 0 then
 	T.PP(C["datatext"].fps_ms, Text)
 
 	local int = 1
-	local function Update(self, t)
-		int = int - t
-		if int < 0 then
-			Text:SetText(floor(GetFramerate())..L.datatext_fps..select(3, GetNetStats())..L.datatext_ms)
-			self:SetAllPoints(Text)
-			int = 1			
-		end	
+        local function Update(self, t)
+                int = int - t
+                if int < 0 then
+         -- set up dynamic colors for fps and latency
+         local fps_color = GREEN_FONT_COLOR_CODE
+         local ms_color  = GREEN_FONT_COLOR_CODE
+         local fps_rate  = floor(GetFramerate())
+         local ms_rate   = select(3, GetNetStats())
+         
+         -- fps
+         if fps_rate < 15 then
+            fps_color = RED_FONT_COLOR_CODE
+         elseif fps_rate < 35 then
+            fps_color = YELLOW_FONT_COLOR_CODE
+         end
+         
+         -- latency
+         if ms_rate > 75 then
+            ms_color = YELLOW_FONT_COLOR_CODE
+         elseif ms_rate > 350 then
+            ms_color = RED_FONT_COLOR_CODE
+         end
+                        
+         Text:SetText(fps_color..fps_rate..hexb..hexa..L.datatext_fps..hexb..ms_color..ms_rate..hexb..hexa..L.datatext_ms..hexb)
+                        self:SetAllPoints(Text)
+                        int = 1                 
+                end     
 	end
 	
 	Stat:SetScript("OnUpdate", Update) 

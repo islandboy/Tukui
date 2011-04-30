@@ -227,13 +227,13 @@ local function SetupChatPosAndFont(self)
 			FCF_SavePositionAndDimensions(chat)
 		elseif i == 4 and name == LOOT then
 			if not chat.isDocked then
-				chat:ClearAllPoints()
-				chat:Point("BOTTOMRIGHT", TukuiInfoRight, "TOPRIGHT", 0, 6)
-				chat:Point("BOTTOMLEFT", TukuiInfoRight, "TOPLEFT", 0, 6)
-				chat:SetJustifyH("RIGHT") 
-				FCF_SavePositionAndDimensions(chat)
-			end
-		end
+                                chat:ClearAllPoints()
+                                chat:Point("BOTTOMRIGHT", TukuiInfoRight, "TOPRIGHT", 0, 6)
+                                chat:Point("BOTTOMLEFT", TukuiInfoRight, "TOPLEFT", 0, 6)
+                                chat:SetJustifyH("LEFT") 
+                                FCF_SavePositionAndDimensions(chat)
+                        end
+                end
 	end
 			
 	-- reposition battle.net popup over chat #1
