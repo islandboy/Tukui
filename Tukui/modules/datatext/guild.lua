@@ -142,63 +142,6 @@ Stat:SetScript("OnMouseUp", function(self, btn)
 end)
 
 Stat:SetScript("OnEnter", function(self)
-<<<<<<< HEAD
-   if InCombatLockdown() or not IsInGuild() then return end
-      
-   local name, rank, level, zone, note, officernote, connected, status, class
-   local zonec, classc, levelc
-   local online = totalOnline
-      
-   local anchor, panel, xoff, yoff = T.DataTextTooltipAnchor(Text)
-   GameTooltip:SetOwner(panel, anchor, xoff, yoff)
-   GameTooltip:ClearLines()
-   GameTooltip:AddDoubleLine(string.format(guildInfoString, GetGuildInfo('player'), GetGuildLevel()), string.format(guildInfoString2, L.datatext_guild, online, #guildTable),tthead.r,tthead.g,tthead.b,tthead.r,tthead.g,tthead.b)
-   GameTooltip:AddLine(' ')
-   
-   if guildMotD ~= "" then GameTooltip:AddLine(string.format(guildMotDString, GUILD_MOTD, guildMotD), ttsubh.r, ttsubh.g, ttsubh.b, 1) end
-   
-   local col = T.RGBToHex(ttsubh.r, ttsubh.g, ttsubh.b)
-   GameTooltip:AddLine' '
-   if GetGuildLevel() ~= 25 then
-      local currentXP, nextLevelXP, percentTotal = unpack(guildXP[0])
-      local dailyXP, maxDailyXP, percentDaily = unpack(guildXP[1])
-      GameTooltip:AddLine(string.format(col..GUILD_EXPERIENCE_CURRENT, "|r |cFFFFFFFF"..T.ShortValue(currentXP), T.ShortValue(nextLevelXP), percentTotal))
-      GameTooltip:AddLine(string.format(col..GUILD_EXPERIENCE_DAILY, "|r |cFFFFFFFF"..T.ShortValue(dailyXP), T.ShortValue(maxDailyXP), percentDaily))
-   end
-   
-   local _, _, standingID, barMin, barMax, barValue = GetGuildFactionInfo()
-   if standingID ~= 8 then -- Not Max Rep
-      barMax = barMax - barMin
-      barValue = barValue - barMin
-      barMin = 0
-      GameTooltip:AddLine(string.format("%s:|r |cFFFFFFFF%s/%s (%s%%)",col..COMBAT_FACTION_CHANGE, T.ShortValue(barValue), T.ShortValue(barMax), math.ceil((barValue / barMax) * 100)))
-   end
-   
-   if online > 1 then
-      GameTooltip:AddLine(' ')
-      for i = 1, #guildTable do
-         if online <= 1 then
-            if online > 1 then GameTooltip:AddLine(format("+ %d More...", online - modules.Guild.maxguild),ttsubh.r,ttsubh.g,ttsubh.b) end
-            break
-         end
-
-         name, rank, level, zone, note, officernote, connected, status, class = unpack(guildTable[i])
-         if connected and name ~= T.myname then
-            if GetRealZoneText() == zone then zonec = activezone else zonec = inactivezone end
-            classc, levelc = (CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS)[class], GetQuestDifficultyColor(level)
-            
-            if IsShiftKeyDown() then
-               GameTooltip:AddDoubleLine(string.format(nameRankString, name, rank), zone, classc.r, classc.g, classc.b, zonec.r, zonec.g, zonec.b)
-               if note ~= "" then GameTooltip:AddLine(string.format(noteString, note), ttsubh.r, ttsubh.g, ttsubh.b, 1) end
-               if officernote ~= "" then GameTooltip:AddLine(string.format(officerNoteString, officernote), ttoff.r, ttoff.g, ttoff.b ,1) end
-            else
-               GameTooltip:AddDoubleLine(string.format(levelNameStatusString, levelc.r*255, levelc.g*255, levelc.b*255, level, name, status), zone, classc.r,classc.g,classc.b, zonec.r,zonec.g,zonec.b)
-            end
-         end
-      end
-   end
-   GameTooltip:Show()
-=======
 	if InCombatLockdown() or not IsInGuild() then return end
 	
 	UpdateGuildMessage()
@@ -261,7 +204,6 @@ Stat:SetScript("OnEnter", function(self)
 		end
 	end
 	GameTooltip:Show()
->>>>>>> upstream/master
 end)
 
 Stat:SetScript("OnLeave", function() GameTooltip:Hide() end)
@@ -274,10 +216,4 @@ Stat:RegisterEvent("GUILD_ROSTER_SHOW")
 Stat:RegisterEvent("PLAYER_ENTERING_WORLD")
 Stat:RegisterEvent("GUILD_ROSTER_UPDATE")
 Stat:RegisterEvent("PLAYER_GUILD_UPDATE")
-<<<<<<< HEAD
-Stat:RegisterEvent("GUILD_MOTD")
 Stat:SetScript("OnEvent", Update)
-UpdateGuildMessage()
-=======
-Stat:SetScript("OnEvent", Update)
->>>>>>> upstream/master
