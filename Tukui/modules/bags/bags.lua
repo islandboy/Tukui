@@ -657,7 +657,26 @@ function Stuffing:Layout(lb)
 			b.frame:ClearAllPoints()
 			b.frame:Point("LEFT", fb, "LEFT", xoff, 0)
 			b.frame:Show()
+         
+			local btns = self.buttons
+			b.frame:HookScript("OnEnter", function(self)
+				local bag
+				if lb then bag = v else bag = v + 1 end
 
+				for ind, val in ipairs(btns) do
+					if val.bag == bag then
+						val.frame:SetAlpha(1)
+					else
+						val.frame:SetAlpha(0.2)
+					end
+				end
+			end)
+
+			b.frame:HookScript("OnLeave", function(self)
+				for _, btn in ipairs(btns) do
+					btn.frame:SetAlpha(1)
+				end
+			end)
 
 			idx = idx + 1
 		end
@@ -705,11 +724,8 @@ function Stuffing:Layout(lb)
 					table.insert(self.buttons, idx + 1, b)
 				end
 
-				xoff = 12 + (x * 31)
-						+ (x * 4)
-
-				yoff = off + 12 + (y * 31)
-						+ ((y - 1) * 4)
+				xoff = 12 + (x * 31) + (x * 4)
+				yoff = off + 12 + (y * 31) + ((y - 1) * 4)
 				yoff = yoff * -1
 
 				b.frame:ClearAllPoints()
