@@ -1,12 +1,13 @@
 ﻿local T, C, L = unpack(select(2, ...)) -- Import: T - functions, constants, variables; C - config; L - locales
 
 C["general"] = {
-   ["autoscale"] = true,                               -- mainly enabled for users that don't want to mess with the config file
-   ["uiscale"] = 0.71,                                 -- set your value (between 0.64 and 1) of your uiscale if autoscale is off
-   ["overridelowtohigh"] = false,                      -- EXPERIMENTAL ONLY! override lower version to higher version on a lower reso.
-   ["multisampleprotect"] = true,                      -- i don't recommend this because of shitty border but, voila!
-   ["backdropcolor"] = { .1,.1,.1 },                   -- default backdrop color of panels
-   ["bordercolor"] = { .6,.6,.6 },                     -- default border color of panels
+	["autoscale"] = true,                               -- mainly enabled for users that don't want to mess with the config file
+	["uiscale"] = 0.71,                                 -- set your value (between 0.64 and 1) of your uiscale if autoscale is off
+	["overridelowtohigh"] = false,                      -- EXPERIMENTAL ONLY! override lower version to higher version on a lower reso.
+	["multisampleprotect"] = true,                      -- i don't recommend this because of shitty border but, voila!
+	["backdropcolor"] = { .1,.1,.1 },                   -- default backdrop color of panels
+	["bordercolor"] = { .6,.6,.6 },                     -- default border color of panels
+	["blizzardreskin"] = false                          -- reskin all Blizzard frames
 }
 
 C["unitframes"] = {
@@ -79,10 +80,6 @@ C["bags"] = {
    ["enable"] = true,                                  -- enable an all in one bag mod that fit tukui perfectly
 }
 
-C["map"] = {
-   ["enable"] = true,                                  -- reskin the map to fit tukui
-}
-
 C["loot"] = {
    ["lootframe"]     = false,                          -- reskin the loot frame to fit tukui
    ["rolllootframe"] = false,                          -- reskin the roll frame to fit tukui
@@ -136,11 +133,11 @@ C["chat"] = {
 
 C["nameplate"] = {
    ["enable"] = true,                                  -- enable nice skinned nameplates that fit into tukui
-   ["showhealth"] = false,                            -- show health text on nameplate
-   ["enhancethreat"] = false,                         -- threat features based on if your a tank or not
-   ["combat"] = false,                               -- only show enemy nameplates in-combat.
-   ["goodcolor"] = {75/255,  175/255, 76/255},           -- good threat color (tank shows this with threat, everyone else without)
-   ["badcolor"] = {0.78, 0.25, 0.25},                 -- bad threat color (opposite of above)
+   ["showhealth"] = false,                             -- show health text on nameplate
+   ["enhancethreat"] = false,                          -- threat features based on if your a tank or not
+   ["combat"] = false,                                 -- only show enemy nameplates in-combat.
+   ["goodcolor"] = {75/255,  175/255, 76/255},         -- good threat color (tank shows this with threat, everyone else without)
+   ["badcolor"] = {0.78, 0.25, 0.25},                  -- bad threat color (opposite of above)
    ["transitioncolor"] = {218/255, 197/255, 92/255},   -- threat color when gaining threat
 }
 
