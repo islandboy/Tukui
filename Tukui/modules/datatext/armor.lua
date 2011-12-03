@@ -16,21 +16,13 @@ if C["datatext"].armor and C["datatext"].armor > 0 then
 	Text:SetFont(C.media.font, C["datatext"].fontsize)
 	T.PP(C["datatext"].armor, Text)
 
-<<<<<<< HEAD
-        local function Update(self)
-                baseArmor , effectiveArmor, armor, posBuff, negBuff = UnitArmor("player");
-                Text:SetText((effectiveArmor).." "..hexa..L.datatext_armor..hexb)
-                --Setup Armor Tooltip
-                self:SetAllPoints(Text)
-        end
-=======
 	local function Update(self)
 		baseArmor , effectiveArmor, armor, posBuff, negBuff = UnitArmor("player");
+      --Text:SetText((effectiveArmor).." "..hexa..L.datatext_armor..hexb)
 		Text:SetText(Stat.Color2..(effectiveArmor).."|r "..Stat.Color1..L.datatext_armor.."|r")
 		--Setup Armor Tooltip
 		self:SetAllPoints(Text)
 	end
->>>>>>> upstream/master
 
 	Stat:RegisterEvent("UNIT_INVENTORY_CHANGED")
 	Stat:RegisterEvent("UNIT_AURA")

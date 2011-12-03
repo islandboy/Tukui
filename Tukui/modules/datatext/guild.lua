@@ -50,15 +50,6 @@ local function BuildGuildTable()
 end
 
 local function UpdateGuildXP()
-<<<<<<< HEAD
-   local currentXP, remainingXP, dailyXP, maxDailyXP = UnitGetGuildXP("player")
-   local nextLevelXP = currentXP + remainingXP
-   local percentTotal = tostring(math.ceil((currentXP / nextLevelXP) * 100))
-   local percentDaily = tostring(math.ceil((dailyXP / maxDailyXP) * 100))
-   
-   guildXP[0] = { currentXP, nextLevelXP, percentTotal }
-   guildXP[1] = { dailyXP, maxDailyXP, percentDaily }
-=======
 	local currentXP, remainingXP, dailyXP, maxDailyXP = UnitGetGuildXP("player")
 	local nextLevelXP = currentXP + remainingXP
 	
@@ -70,7 +61,6 @@ local function UpdateGuildXP()
 	
 	guildXP[0] = { currentXP, nextLevelXP, percentTotal }
 	guildXP[1] = { dailyXP, maxDailyXP, percentDaily }
->>>>>>> upstream/master
 end
 
 local function UpdateGuildMessage()

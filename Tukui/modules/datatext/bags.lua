@@ -22,11 +22,8 @@ if C["datatext"].bags and C["datatext"].bags > 0 then
 			free, total = free + GetContainerNumFreeSlots(i), total + GetContainerNumSlots(i)
 		end
 		used = total - free
-<<<<<<< HEAD
-		Text:SetText(hexa..L.datatext_bags..hexb..used.."/"..total)
-=======
+		--Text:SetText(hexa..L.datatext_bags..hexb..used.."/"..total)
 		Text:SetText(Stat.Color1..L.datatext_bags.."|r"..Stat.Color2..used.."/"..total.."|r")
->>>>>>> upstream/master
 		self:SetAllPoints(Text)
 	end
           

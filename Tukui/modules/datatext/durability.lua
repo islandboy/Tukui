@@ -29,37 +29,25 @@ if C["datatext"].dur and C["datatext"].dur > 0 then
 				end
 			end
 		end
-<<<<<<< HEAD
-                table.sort(L.Slots, function(a, b) return a[3] < b[3] end)
+      table.sort(L.Slots, function(a, b) return a[3] < b[3] end)
                 
-                if Total > 0 then
+      if Total > 0 then
          local dura = floor(L.Slots[1][3]*100)
          local r = RED_FONT_COLOR_CODE
          local y = YELLOW_FONT_COLOR_CODE
          local g = GREEN_FONT_COLOR_CODE
          if dura < 33 then
-                           Text:SetText(r..dura.."% "..hexb..hexa..L.datatext_armor..hexb)
+            Text:SetText(r..dura.."% "..hexb..hexa..L.datatext_armor..hexb)
          elseif dura < 67 then
-                           Text:SetText(y..dura.."% "..hexb..hexa..L.datatext_armor..hexb)
+            Text:SetText(y..dura.."% "..hexb..hexa..L.datatext_armor..hexb)
          else
             Text:SetText(g..dura.."% "..hexb..hexa..L.datatext_armor..hexb)
          end
-                else
-                        Text:SetText(green.."100% "..hexb..hexa..L.datatext_armor..hexb)
-                end
-                -- Setup Durability Tooltip
-                self:SetAllPoints(Text)
-=======
-		table.sort(L.Slots, function(a, b) return a[3] < b[3] end)
-		
-		if Total > 0 then
-			Text:SetText(Stat.Color2..floor(L.Slots[1][3]*100).."% |r"..Stat.Color1..L.datatext_armor.."|r")
-		else
-			Text:SetText(Stat.Color2.."100% |r"..Stat.Color1..L.datatext_armor.."|r")
-		end
-		-- Setup Durability Tooltip
-		self:SetAllPoints(Text)
->>>>>>> upstream/master
+      else
+         Text:SetText(green.."100% "..hexb..hexa..L.datatext_armor..hexb)
+      end
+      -- Setup Durability Tooltip
+      self:SetAllPoints(Text)
 		Total = 0
 	end
 
