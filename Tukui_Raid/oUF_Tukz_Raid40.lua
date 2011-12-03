@@ -10,9 +10,13 @@ if not C["unitframes"].enable == true then return end
 
 local font2 = C["media"].uffont
 local font1 = C["media"].font
+local backdrop = {
+	bgFile = C["media"].blank,
+	insets = {top = -T.mult, left = -T.mult, bottom = -T.mult, right = -T.mult},
+}
 
 local function Shared(self, unit)
-	self.colors = T.oUF_colors
+	self.colors = T.UnitColor
 	self:RegisterForClicks("AnyUp")
 	self:SetScript('OnEnter', UnitFrame_OnEnter)
 	self:SetScript('OnLeave', UnitFrame_OnLeave)
@@ -46,7 +50,7 @@ local function Shared(self, unit)
 	else
 		health.colorDisconnected = true
 		health.colorClass = true
-		health.colorReaction = true			
+		health.colorReaction = true
 	end
 		
 	local name = health:CreateFontString(nil, 'OVERLAY')
@@ -104,7 +108,7 @@ oUF:RegisterStyle('TukuiDpsR40', Shared)
 oUF:Factory(function(self)
 	oUF:SetActiveStyle("TukuiDpsR40")
 
-	local raid = self:SpawnHeader("oUF_TukuiDpsRaid40", nil, "custom [@raid26,exists] show;hide", 
+	local raid = self:SpawnHeader("TukuiRaid40", nil, "custom [@raid26,exists] show;hide", 
 		'oUF-initialConfigFunction', [[
 			local header = self:GetParent()
 			self:SetWidth(header:GetAttribute('initial-width'))

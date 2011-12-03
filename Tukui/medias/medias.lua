@@ -31,6 +31,10 @@ C["media"] = {
 	["kr_uffont"] = [[Fonts\2002.TTF]], -- general font of unitframes
 	["kr_dmgfont"] = [[Fonts\2002.TTF]], -- general font of dmg / sct
 	
+	["cn_font"] = [=[Fonts\ZYKai_T.TTF]=], -- general font of tukui
+	["cn_uffont"] = [[Fonts\ZYHei.TTF]], -- general font of unitframes
+	["cn_dmgfont"] = [[Fonts\ZYKai_C.TTF]], -- general font of dmg / sct
+	
 	-- fonts (GLOBAL)
 	["pixelfont"] = [=[Interface\Addons\Tukui\medias\fonts\pixel_font.ttf]=], -- general font of tukui
 	
@@ -40,12 +44,29 @@ C["media"] = {
 	["bubbleTex"] = [[Interface\AddOns\Tukui\medias\textures\bubbleTex]], -- unitframes combo points
 	["copyicon"] = [[Interface\AddOns\Tukui\medias\textures\copy]], -- copy icon
 	["blank"] = [[Interface\AddOns\Tukui\medias\textures\blank]], -- the main texture for all borders/panels
-	["bordercolor"] = C.general.bordercolor or { .6,.6,.6 }, -- border color of tukui panels
-	["altbordercolor"] = C.unitframes.bordercolor or { .4,.4,.4 }, -- alternative border color, mainly for unitframes text panels.
-	["backdropcolor"] = C.general.backdropcolor or { .1,.1,.1 }, -- background color of tukui panels
 	["buttonhover"] = [[Interface\AddOns\Tukui\medias\textures\button_hover]],
+	
+	-- colors
+	["bordercolor"] = C.general.bordercolor or { .6,.6,.6 }, -- border color of tukui panels
+	["backdropcolor"] = C.general.backdropcolor or { .1,.1,.1 }, -- background color of tukui panels
+	["datatextcolor1"] = { 1, 1, 1 }, -- color of datatext title
+	["datatextcolor2"] = { 1, 1, 1 }, -- color of datatext result
 	
 	-- sound
 	["whisper"] = [[Interface\AddOns\Tukui\medias\sounds\whisper.mp3]],
 	["warning"] = [[Interface\AddOns\Tukui\medias\sounds\warning.mp3]],
 }
+
+-------------------------------------------------------------------
+-- Used to overwrite default medias outside Tukui
+-------------------------------------------------------------------
+
+local settings = TukuiEditedDefaultConfig
+if settings then
+	local media = settings.media
+	if media then
+		for option, value in pairs(media) do
+			C.media[option] = value
+		end
+	end
+end

@@ -27,6 +27,7 @@ L.chat_lfg = "LookingForGroup"
 
 L.disband = "Disbanding group ?"
 
+L.datatext_notalents ="No Talents"
 L.datatext_download = "Download: "
 L.datatext_bandwidth = "Bandwidth: "
 L.datatext_guild = "Guild"
@@ -114,6 +115,7 @@ L.popup_install_yes = "Yeah! (recommended!)"
 L.popup_install_no = "No, it sux so hard"
 L.popup_reset_yes = "Yeah baby!"
 L.popup_reset_no = "No, or else I'll QQ in the forums!"
+L.popup_fix_ab = "There is something wrong with your action bar. Do you want to reloadui to fix it?"
 
 L.merchant_repairnomoney = "You don't have enough money to repair!"
 L.merchant_repaircost = "Your items have been repaired for"
@@ -160,6 +162,9 @@ L.bags_nothingsort= "Nothing to sort."
 L.bags_bids = "Using bags: "
 L.bags_stackend = "Restacking finished."
 L.bags_rightclick_search = "Right-click to search."
+
+L.loot_fish = "Fishy loot"
+L.loot_empty = "Empty slot"
 
 L.chat_invalidtarget = "Invalid Target"
 
@@ -217,6 +222,7 @@ L.move_shapeshift = "Move Shapeshift/Totem"
 L.move_achievements = "Move Achievements"
 L.move_roll = "Move Loot Roll Frame"
 L.move_vehicle = "Move Vehicle Seat"
+L.move_extrabutton = "Extra Button"
 
 -------------------------------------------------
 -- INSTALLATION

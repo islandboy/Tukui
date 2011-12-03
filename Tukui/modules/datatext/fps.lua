@@ -5,16 +5,20 @@ local T, C, L = unpack(select(2, ...)) -- Import: T - functions, constants, vari
 --------------------------------------------------------------------
 
 if C["datatext"].fps_ms and C["datatext"].fps_ms > 0 then
-	local Stat = CreateFrame("Frame")
+	local Stat = CreateFrame("Frame", "TukuiStatFPS")
 	Stat:SetFrameStrata("BACKGROUND")	
 	Stat:SetFrameLevel(3)
 	Stat:EnableMouse(true)
+	Stat.Option = C.datatext.fps_ms
+	Stat.Color1 = T.RGBToHex(unpack(C.media.datatextcolor1))
+	Stat.Color2 = T.RGBToHex(unpack(C.media.datatextcolor2))
 
-	local Text  = TukuiInfoLeft:CreateFontString(nil, "OVERLAY")
+	local Text  = Stat:CreateFontString("TukuiStatFPSText", "OVERLAY")
 	Text:SetFont(C.media.font, C["datatext"].fontsize)
 	T.PP(C["datatext"].fps_ms, Text)
 
 	local int = 1
+<<<<<<< HEAD
         local function Update(self, t)
                 int = int - t
                 if int < 0 then
@@ -42,6 +46,17 @@ if C["datatext"].fps_ms and C["datatext"].fps_ms > 0 then
                         self:SetAllPoints(Text)
                         int = 1                 
                 end     
+=======
+	local function Update(self, t)
+		int = int - t
+		if int < 0 then
+			local ms = select(3, GetNetStats())
+			if ms == 0 then ms = "???" end
+			Text:SetText(Stat.Color2..floor(GetFramerate()).."|r"..Stat.Color1..L.datatext_fps.."|r"..Stat.Color2..ms.."|r"..Stat.Color1..L.datatext_ms.."|r")
+			self:SetAllPoints(Text)
+			int = 1			
+		end	
+>>>>>>> upstream/master
 	end
 	
 	Stat:SetScript("OnUpdate", Update) 

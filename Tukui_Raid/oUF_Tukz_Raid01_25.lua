@@ -10,9 +10,13 @@ if not C["unitframes"].enable == true then return end
 
 local font2 = C["media"].uffont
 local font1 = C["media"].font
+local backdrop = {
+	bgFile = C["media"].blank,
+	insets = {top = -T.mult, left = -T.mult, bottom = -T.mult, right = -T.mult},
+}
 
 local function Shared(self, unit)
-	self.colors = T.oUF_colors
+	self.colors = T.UnitColor
 	self:RegisterForClicks("AnyUp")
 	self:SetScript('OnEnter', UnitFrame_OnEnter)
 	self:SetScript('OnLeave', UnitFrame_OnLeave)
@@ -136,7 +140,7 @@ oUF:RegisterStyle('TukuiDpsP05R10R15R25', Shared)
 oUF:Factory(function(self)
 	oUF:SetActiveStyle("TukuiDpsP05R10R15R25")
 
-	local raid = self:SpawnHeader("oUF_TukuiDpsRaid05101525", nil, "custom [@raid26,exists] hide;show", 
+	local raid = self:SpawnHeader("TukuiRaid25", nil, "custom [@raid26,exists] hide;show", 
 		'oUF-initialConfigFunction', [[
 			local header = self:GetParent()
 			self:SetWidth(header:GetAttribute('initial-width'))

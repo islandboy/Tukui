@@ -1,195 +1,182 @@
-if GetLocale() == "esES" then
+﻿if GetLocale() == "esES" or GetLocale() == "esMX" then
+	-- translated by mrglmrgl
+	-- based on esMX client
 
-	-- update needed msg
-	TukuiL.option_update = "You need to update your Tukui ConfigUI addon because of Tukui latest changes, please visit www.tukui.org"
-	
-	-- general
-	TukuiL.option_general = "General"
-	TukuiL.option_general_uiscale = "Escala UI Automatica"
-	TukuiL.option_general_override = "Usar reso Alta en monitor de reso Baja"
-	TukuiL.option_general_multisample = "Proteccion de Multisample (margen 1xp limpio)"
-	TukuiL.option_general_customuiscale = "Escala UI (solo si escala automatica esta apagado)"
-	TukuiL.option_general_backdropcolor = "Define el color por defecto del fondo de los paneles"
-	TukuiL.option_general_bordercolor = "Define el color por defecto de los paneles"
-	TukuiL.option_general_blizzardreskin = "Reskin Blizzard frames to match Tukui"
+	-- General
+	TukuiConfigUILocalization.general = "General"
+	TukuiConfigUILocalization.generalautoscale = "Autoajustar Escala IU"
+	TukuiConfigUILocalization.generaloverridelowtohigh = "Usar entorno de Alta resolución en una resolución menor"
+	TukuiConfigUILocalization.generalmultisampleprotect = "Protección de multimuestreo"
+	TukuiConfigUILocalization.generaluiscale = "Escala de IU (si autoajustar escala está desactivado)"
+	TukuiConfigUILocalization.generalbackdropcolor = "Establece el color predeterminado de fondo de los paneles"
+	TukuiConfigUILocalization.generalbordercolor = "Establece el color predeterminado de bordes de los paneles"
+	TukuiConfigUILocalization.generalblizzardreskin = "Ajusta los marcos de Blizzard para que coincidan visualmente con Tukui"
 
-	-- nameplate
-	TukuiL.option_nameplates = "Placas de nombre"
-	TukuiL.option_nameplates_enable = "Activar placas de nombre"
-	TukuiL.option_nameplates_enhancethreat = "Activar visor de amenaza, cambia automáticamente según tu rol: \n Tanque - Verde (amenaza) Rojo (sin amenaza) DPS - Verde (sin amenaza) Rojo (amenaza)"
-	TukuiL.option_nameplates_showhealth = "Mostrar vida en las placas de nombre"
- 	TukuiL.option_nameplates_combat = "Mostrar las placas de nombre de los enemigos sólo en combate"
-	TukuiL.option_nameplates_goodcolor = "Color de buena amenaza, dependiendo si eres Tanque, DPS o Healer."
-	TukuiL.option_nameplates_badcolor = "Color de mala amenaza, dependiendo si eres Tanque, DPS o Healer."
-	TukuiL.option_nameplates_transitioncolor = "Color de Perdida o Ganancia de Amenaza"
- 
-	-- merchant
-	TukuiL.option_merchant = "Comerciante"
-	TukuiL.option_merchant_autosell = "Vender los objetos grises automaticamente"
-	TukuiL.option_merchant_autorepair = "Reparar los objetos automaticamente"
-	TukuiL.option_merchant_sellmisc = "Vender automaticamente determinados objetos (no grises) determinados como basura."
- 
-	-- bags
-	TukuiL.option_bags = "Bolsas"
-	TukuiL.option_bags_enable = "Habilitar bolsa todo-en-uno"
- 
-	-- datatext
-	TukuiL.option_datatext = "Texto de Data"
-	TukuiL.option_datatext_24h = "Habilitar Tiempo en 24h"
-	TukuiL.option_datatext_localtime = "Usar Tiempo local en vez de Tiempo del Servidor"
-	TukuiL.option_datatext_bg = "Habilitar Estadísticas de Campos de Batalla"
-	TukuiL.option_datatext_hps = "Posición de Curas por Segundo"
-	TukuiL.option_datatext_guild = "Posición de Hermandad"
-	TukuiL.option_datatext_arp = "Posición de penetración de armadura"
-	TukuiL.option_datatext_mem = "Posición de memoria"
-	TukuiL.option_datatext_bags = "Posición de bolsas"
-	TukuiL.option_datatext_fontsize = "Tamaño de el Texto"
-	TukuiL.option_datatext_fps_ms = "Posición de MS y FPS"
-	TukuiL.option_datatext_armor = "Posición de Armadura"
-	TukuiL.option_datatext_avd = "Posición de Evitación"
-	TukuiL.option_datatext_power = "Posición de Poder"
-	TukuiL.option_datatext_haste = "Posición de Precipitación"
-	TukuiL.option_datatext_friend = "Posición de Amigos"
-	TukuiL.option_datatext_time = "Posición del Tiempo"
-	TukuiL.option_datatext_gold = "Posición del Oro"
-	TukuiL.option_datatext_dps = "Posición de Daño por segundo"
-	TukuiL.option_datatext_crit = "Posición del Crítico"
-	TukuiL.option_datatext_dur = "Posición de la Durabilidad"
-	TukuiL.option_datatext_currency = "Posición de las Monedas (0 para desactivar)"
-	TukuiL.option_datatext_micromenu = "Posición Micro Menu (0 para desactiva)"
-	TukuiL.option_datatext_hit = "Posición Índice de Golpe (0 para desactiva)"
-	TukuiL.option_datatext_mastery = "Posición Maestría (0 para desactiva)"	
- 
-	-- unit frames
-	TukuiL.option_unitframes_unitframes = "Marcos de Unidad"
-	TukuiL.option_unitframes_combatfeedback = "Mostrar Daño/Curas en los Marcos de Unidad"
-	TukuiL.option_unitframes_runebar = "Habilitar barra de runas para Caballeros de la Muerte"
-	TukuiL.option_unitframes_auratimer = "Habilitar temporizador para Auras"
-	TukuiL.option_unitframes_totembar = "Habilitar barras de Totems para Chamánes"
-	TukuiL.option_unitframes_totalhpmp = "Mostrar Vida/Mana Total"
-	TukuiL.option_unitframes_playerparty = "Mostrar a ti mismo en Grupos"
-	TukuiL.option_unitframes_aurawatch = "Habilitar PVE vigilancia de Auras (Solo para Grid)"
-	TukuiL.option_unitframes_castbar = "Habilitar barra de lanzamiento"
-	TukuiL.option_unitframes_targetaura = "Habilitar auras del Objetivo"
-	TukuiL.option_unitframes_saveperchar = "Guardar Marcos de Unidad para solo 1 personaje"
-	TukuiL.option_unitframes_playeraggro = "Enseñar tu amenaza"
-	TukuiL.option_unitframes_smooth = "Habilitar barra lisa"
-	TukuiL.option_unitframes_portrait = "Mostrar retratos"
-	TukuiL.option_unitframes_enable = "Habilitar TukUI Marcos de Unidad"
-	TukuiL.option_unitframes_enemypower = "Habilitar maná solo para el Enemigo"
-	TukuiL.option_unitframes_gridonly = "Habilitar mana solo para el Enemigo"
-	TukuiL.option_unitframes_healcomm = "Habilitar healcomm"
-	TukuiL.option_unitframes_focusdebuff = "Habilitar Perjuicios en tu Foco"
-	TukuiL.option_unitframes_raidaggro = "Habilitar amenaza en tu Grupo/Banda"
-	TukuiL.option_unitframes_boss = "Habilitar Marcos de Unidad para Jefes"
-	TukuiL.option_unitframes_enemyhostilitycolor = "Colorear Marcos de Unidad de enemigos por Hostilidad"
-	TukuiL.option_unitframes_hpvertical = "Mostrar Barra de Vida Vertical para Grid"
-	TukuiL.option_unitframes_symbol = "Mostrar símbolos en Grupos/Banda"
-	TukuiL.option_unitframes_threatbar = "Habilitar barra de Aggro"
-	TukuiL.option_unitframes_enablerange = "Mostrar alfa en Grupos/Banda"
-	TukuiL.option_unitframes_focus = "Habilitar el Objetivo de tu Foco"
-	TukuiL.option_unitframes_latency = "Mostrar MS en tu Barra de lanzamiento"
-	TukuiL.option_unitframes_icon = "Mostrar iconos en tu barra de lanzamiento"
-	TukuiL.option_unitframes_playeraura = "Habilitar un modo alternativo de Auras para el jugador"
-	TukuiL.option_unitframes_aurascale = "Tamaño del texto en las Auras"
-	TukuiL.option_unitframes_gridscale = "Tamaño de Grid"
-	TukuiL.option_unitframes_manahigh = "Indicador de Maná alto (Para Cazadores)"
-	TukuiL.option_unitframes_manalow = "Indicador de Maná bajo (Todas classes con Maná)"
-	TukuiL.option_unitframes_range = "Alfa en Grupo/Banda que estan fuera de alcance"
-	TukuiL.option_unitframes_maintank = "Habilitar Tanque Principal"
-	TukuiL.option_unitframes_mainassist = "Habilitar Ayudadores Principales"
-	TukuiL.option_unitframes_unicolor = "Habilitar Tema de Color Unico (Barra de vida gris)"
-	TukuiL.option_unitframes_totdebuffs = "Habilitar Perjuicios en Objetivo del Objetivo (Resolucion Alta)"
-	TukuiL.option_unitframes_classbar = "Habilitar Barra de Clase"
-	TukuiL.option_unitframes_weakenedsoulbar = "Habilitar Barra de Notificacion de Alma Debilitada (Sacerdote)"
-	TukuiL.option_unitframes_onlyselfdebuffs = "Mostrar solo tus debuffs en el objetivo"
-	TukuiL.option_unitframes_focus = "Habilitar el Blanco de tu Foco"
-	TukuiL.option_unitframes_bordercolor = "Define el color por defecto del borde de los paneles"
- 
-	-- loot
-	TukuiL.option_loot = "Botín"
-	TukuiL.option_loot_enableloot = "Habilitar Ventana del Botin"
-	TukuiL.option_loot_autogreed = "Habilitar Auto-Codicia para objetos verdes al Nivel 85"
-	TukuiL.option_loot_enableroll = "Habilitar Ventana de Tirar Dados por Objetos"
- 
-	-- map
-	TukuiL.option_map = "Mapa"
-	TukuiL.option_map_enable = "Habilitar Mapa"
- 
-	-- invite
-	TukuiL.option_invite = "Invitación"
-	TukuiL.option_invite_autoinvite = "Auto-aceptar Invitaciones (Amigos y Hermandad solo)"
- 
-	-- tooltip
-	TukuiL.option_tooltip = "Tooltip"
-	TukuiL.option_tooltip_enable = "Habilitar Tooltip"
-	TukuiL.option_tooltip_hidecombat = "Esconder tooltip en combate"
-	TukuiL.option_tooltip_hidebutton = "Esconder tooltip de los Botones de Habilidad"
-	TukuiL.option_tooltip_hideuf = "Esconder tooltip en Marcos de Unidad"
-	TukuiL.option_tooltip_cursor = "Habilidar Tooltip en tu cursor"
- 
-	-- others
-	TukuiL.option_others = "Otros"
-	TukuiL.option_others_bg = "Habiliadr auto-liberación en Campos de Batalla"
- 
-	-- reminder
-	TukuiL.option_reminder = "Advertencia de Auras"
-	TukuiL.option_reminder_enable = "Habilitar advertencia de auras para el Jugador"
-	TukuiL.option_reminder_sound = "Habilitar Sonido de Advertencia"
- 
+	-- Placas de Nombre
+	TukuiConfigUILocalization.nameplate = "Placas de Nombre"
+	TukuiConfigUILocalization.nameplateenable = "Activar Placas de nombre"
+	TukuiConfigUILocalization.nameplateenhancethreat = "Activar función de amenaza, se ajusta automáticamente en base al rol"
+	TukuiConfigUILocalization.nameplateshowhealth = "Mostrar Salud en Placas de Nombre"
+	TukuiConfigUILocalization.nameplatecombat = "Solo Mostrar Placas de Nombre enemigas en combate"
+	TukuiConfigUILocalization.nameplategoodcolor = "Color para nivel de amenaza bueno, varia dependiendo del rol (tanque  o daño/sanador)"
+	TukuiConfigUILocalization.nameplatebadcolor = "Color para nivel de amenaza malo, varía dependiendo del rol (tanque  o daño/sanador)"
+	TukuiConfigUILocalization.nameplatetransitioncolor = "Color para aumentando/disminuyendo nivel de amenaza"
+
+	-- Vendedor
+	TukuiConfigUILocalization.merchant = "Vendedor"
+	TukuiConfigUILocalization.merchantsellgrays = "Vender automáticamente los objetos grises"
+	TukuiConfigUILocalization.merchantautorepair = "Reparar objetos automáticamente"
+	TukuiConfigUILocalization.merchantsellmisc = "Vender automáticamente objetos definidos (basura no grises)"
+
+	-- Mochila
+	TukuiConfigUILocalization.bags = "Mochila "
+	TukuiConfigUILocalization.bagsenable = "Activar Mochila 'todo en uno'"
+
+	-- Textos de Datos
+	TukuiConfigUILocalization.datatext = "Textos de Datos"
+	TukuiConfigUILocalization.datatexttime24 = "Mostrar hora en formato 24h"
+	TukuiConfigUILocalization.datatextlocaltime = "Usar Hora Local en lugar de Hora del Servidor"
+	TukuiConfigUILocalization.datatextbattleground = "Activar estadísticas de campos de batalla"
+	TukuiConfigUILocalization.datatexthps_text = "Posición para 'Sanación por segundo', (0 para deshabilitar)"
+	TukuiConfigUILocalization.datatextguild = "Posición para 'Clan', (0 para deshabilitar)"
+	TukuiConfigUILocalization.datatext_arp = "Posición para 'Penetración de Armadura', (0 para deshabilitar)"
+	TukuiConfigUILocalization.datatextsystem = "Posición para 'Uso de Memoria', (0 para deshabilitar)"
+	TukuiConfigUILocalization.datatextbags = "Posición para 'Inventario', (0 para deshabilitar)"
+	TukuiConfigUILocalization.datatextfontsize = "Tamaño de fuente para Textos de Datos"
+	TukuiConfigUILocalization.datatextfps_ms = "Posición para 'Latencia e Imágenes por Segundo', (0 para deshabilitar)"
+	TukuiConfigUILocalization.datatextarmor = "Posición para 'Armadura', (0 para deshabilitar)"
+	TukuiConfigUILocalization.datatextavd = "Posición para 'Evasión', (0 para deshabilitar)"
+	TukuiConfigUILocalization.datatextpower = "Posición para 'Poder' (0 para deshabilitar)"
+	TukuiConfigUILocalization.datatexthaste = "Posición para 'Celeridad', (0 para deshabilitar)"
+	TukuiConfigUILocalization.datatextfriends = "Posición para 'Amigos', (0 para deshabilitar)"
+	TukuiConfigUILocalization.datatextwowtime = "Posición para 'Reloj', (0 para deshabilitar)"
+	TukuiConfigUILocalization.datatextgold = "Posición para 'Oro', (0 para deshabilitar)"
+	TukuiConfigUILocalization.datatextdps_text = "Posición para 'Daño por Segundo', (0 para deshabilitar)"
+	TukuiConfigUILocalization.datatextcrit = "Posición para '% de Crit', (0 para deshabilitar)"
+	TukuiConfigUILocalization.datatextdur = "Posición para 'Durabilidad', (0 para deshabilitar)"
+	TukuiConfigUILocalization.datatextcurrency = "Posición para 'Monedas', (0 para deshabilitar)"
+	TukuiConfigUILocalization.datatextmicromenu = "Posición para 'Micro Menu', (0 para deshabilitar)"
+	TukuiConfigUILocalization.datatexthit = "Posición para 'Índice de Golpe', (0 para deshabilitar)"
+	TukuiConfigUILocalization.datatextmastery = "Posición para 'Maestría', (0 para deshabilitar)"
+	TukuiConfigUILocalization.datatexttalent = "Posición para 'Mostrar Especialidad', (0 para deshabilitar)"
+	TukuiConfigUILocalization.datatextcalltoarms = "Posición para 'Llamamiento a las Armas y Mazmorras', (0 para deshabilitar)"
+
+
+	-- Marcos de Unidades
+	TukuiConfigUILocalization.unitframes = "Marcos de Unidades"
+	TukuiConfigUILocalization.unitframescombatfeedback = "Información de Combate en Jugador y Objetivo"
+	TukuiConfigUILocalization.unitframesrunebar = "Activar barra de runas para el Caballero de la Muerte"
+	TukuiConfigUILocalization.unitframesauratimer = "Activar temporizador en auras"
+	TukuiConfigUILocalization.unitframestotembar = "Activar barra de totems para Chamán"
+	TukuiConfigUILocalization.unitframesshowtotalhpmp = "Mostrar totales de Salud/Poder"
+	TukuiConfigUILocalization.unitframesshowplayerinparty = "Mostrarte a tí mismo en el grupo"
+	TukuiConfigUILocalization.unitframesraidunitdebuffwatch = "Activar monitor de auras de JcE (Cuadrícula solamente)"
+	TukuiConfigUILocalization.unitframesunitcastbar = "Activar barra de lanzamiento"
+	TukuiConfigUILocalization.unitframestargetauras = "Activar auras de Objetivo"
+	TukuiConfigUILocalization.unitframessaveperchar = "Almacenar posición por personaje de marcos de unidades"
+	TukuiConfigUILocalization.unitframesplayeraggro = "Activar 'Mostrar Agro' en tí mismo"
+	TukuiConfigUILocalization.unitframesshowsmooth = "Activar barras fluidas"
+	TukuiConfigUILocalization.unitframescharportrait = "Activar retratos en Jugador y Objetivo"
+	TukuiConfigUILocalization.unitframesenable = "Activar los Marcos de Unidades de Tukui"
+	TukuiConfigUILocalization.unitframestargetpowerpvponly = "Activar 'Mostrar Poder en enemigo solamente'"
+	TukuiConfigUILocalization.unitframesgridonly = "Activar modo de Cuadrícula solamente para Entorno de Sanador"
+	TukuiConfigUILocalization.unitframeshealcomm = "Activar healcomm"
+	TukuiConfigUILocalization.unitframesfocusdebuff = "Activar 'Mostrar Prejuicios en Foco'"
+	TukuiConfigUILocalization.unitframesaggro = "Activar 'Mostrar Agro en Grupo/Banda'"
+	TukuiConfigUILocalization.unitframesshowboss = "Activar Marcos de Unidad de Jefes"
+	TukuiConfigUILocalization.unitframesenemyhcolor = "Colorear la barra de salud por hostilidad (para JcJ)"
+	TukuiConfigUILocalization.unitframesgridhealthvertical = "Mostrar barra de salud vertical para entorno de cuadrícula"
+	TukuiConfigUILocalization.unitframesshowsymbols = "Mostrar símbolos en grupo/banda"
+	TukuiConfigUILocalization.unitframesthreatbar = "Activa Barra de Amenaza"
+	TukuiConfigUILocalization.unitframesshowrange = "Activa 'Modo de transparencia por distancia en grupo/banda"
+	TukuiConfigUILocalization.unitframesfocus = "Activa objetivo de foco"
+	TukuiConfigUILocalization.unitframescblatency = "Activa latencia en barra de lanzamiento"
+	TukuiConfigUILocalization.unitframescbicons = "Mostrar íconos en barra de lanzamiento"
+	TukuiConfigUILocalization.unitframesplayerauras = "Activa un modo alterno de auras para jugador"
+	TukuiConfigUILocalization.unitframesauratextscale = "Escala de tamaño de texto en auras"
+	TukuiConfigUILocalization.unitframesgridscale = "Escala de Cuadrícula"
+	TukuiConfigUILocalization.unitframesmanahigh = "Indicador de Maná Alto (Para Cazadores)"
+	TukuiConfigUILocalization.unitframeslowthreshold = "Indicador de Maná Bajo (Todas las clases que usan Maná)"
+	TukuiConfigUILocalization.unitframesalphaoor = "Transparencia en unidad de grupo/banda fuera de rango"
+	TukuiConfigUILocalization.unitframesmaintank = "Activar Tanque Principal"
+	TukuiConfigUILocalization.unitframesmainassist = "Activar Asistente Principal"
+	TukuiConfigUILocalization.unitframesunicolor = "Activar Tema de color único (barra de salud gris)"
+	TukuiConfigUILocalization.unitframestotdebuffs = "Activar Prejuicios de Objetivo de Objetivo (Alta Resolución)"
+	TukuiConfigUILocalization.unitframesclassbar = "Activar barra de clase"
+	TukuiConfigUILocalization.unitframesweakenedsoulbar = "Activar notificación de Alma Debilitada (Sacerdote)"
+	TukuiConfigUILocalization.unitframesonlyselfdebuffs = "Mostrar solo nuestros prejuicios en objetivo"
+	TukuiConfigUILocalization.unitframesshowfocustarget = "Activar objetivo de foco"
+	TukuiConfigUILocalization.unitframesbordercolor = "Establece color predeterminado de borde de paneles"
+	TukuiConfigUILocalization.unitframesmovecombobar = "Mover la barra de combo del objetivo (PÍCARO SOLAMENTE)"
+	TukuiConfigUILocalization.unitframesclassiccombo = "Usar barra de combo clásica"
+	TukuiConfigUILocalization.unitframesgridvertical = "Mostrar grupos de banda en Cuadrícula verticálmente"
+
+	-- Botín
+	TukuiConfigUILocalization.loot = "Botín"
+	TukuiConfigUILocalization.lootlootframe = "Activar Ventana de botín"
+	TukuiConfigUILocalization.lootautogreed = "Activar 'Tirar por Codicia automáticamente' en objetos verdes en máximo nivel"
+	TukuiConfigUILocalization.lootrolllootframe = "Activar Marco de Lanzamiento de Dados por Botín"
+
+	-- Invitar
+	TukuiConfigUILocalization.invite = "Invitar"
+	TukuiConfigUILocalization.inviteautoaccept = "Activar Autoinvitar (Amigos y Compañeros de Clan)"
+
+	-- Descripciones
+	TukuiConfigUILocalization.tooltip = "Descripciones"
+	TukuiConfigUILocalization.tooltipenable = "Activar Descripciones"
+	TukuiConfigUILocalization.tooltiphidecombat = "Ocultar descripciones en combate"
+	TukuiConfigUILocalization.tooltiphidebuttons = "Ocultar descripciones en barras de acción"
+	TukuiConfigUILocalization.tooltiphideuf = "Ocultar descripciones en marcos de unidades"
+	TukuiConfigUILocalization.tooltipcursor = "Activar descripción en cursor"
+
 	-- error
-	TukuiL.option_error = "Mensaje de Error"
-	TukuiL.option_error_hide = "Esconder mensajes de error de tu pantalla"
- 
-	-- action bar
-	TukuiL.option_actionbar = "Barras de Habilidades"
-	TukuiL.option_actionbar_hidess = "Esconder barras de Totems y Cambio de forma"
-	TukuiL.option_actionbar_showgrid = "Siempre enseñar Grid en barras de acciones"
-	TukuiL.option_actionbar_enable = "Habilitar barras de accion de TukUI"
-	TukuiL.option_actionbar_rb = "Enseñar barras derechas solo con el Raton encima"
-	TukuiL.option_actionbar_hk = "Enseñar Hotkeys en los botones"
-	TukuiL.option_actionbar_ssmo = "Barras de Totems y Cambiar de forma solo con el raton encima"
-	TukuiL.option_actionbar_rbn = "Barras de accion bajas (1 o 2)"
-	TukuiL.option_actionbar_rn = "Barras de accion derechas (1, 2 o 3)"
-	TukuiL.option_actionbar_buttonsize = "Tamaño de los botones de la barra principal"
-	TukuiL.option_actionbar_buttonspacing = "Espacio entre los botones de la barra principal"
-	TukuiL.option_actionbar_petbuttonsize = "Tamaño de los botones de Mascota y Cambio de forma"
-	
-	-- quest watch frame
-	TukuiL.option_quest = "Misiones"
-	TukuiL.option_quest_movable = "Dejar que el Marco de misiones se mueva"
- 
+	TukuiConfigUILocalization.error = "Mensaje de Error"
+	TukuiConfigUILocalization.errorenable = "Ocultar spam de errores a la mitad de la pantalla"
+
+	-- barra de acción
+	TukuiConfigUILocalization.actionbar = "Barras de Acción"
+	TukuiConfigUILocalization.actionbarhideshapeshift = "Ocultar Barra de Cambio de Forma/Totems"
+	TukuiConfigUILocalization.actionbarshowgrid = "Siempre mostrar cuadrícula en las barras de acción"
+	TukuiConfigUILocalization.actionbarenable = "Activar las Barras de Acción de Tukui"
+	TukuiConfigUILocalization.actionbarrb = "Mostrar la barra de la derecha al pasar el cursor"
+	TukuiConfigUILocalization.actionbarhotkey = "Mostrar teclas de acceso rápido en las barras de acción"
+	TukuiConfigUILocalization.actionbarssmo = "Mostrar barra de cambio de forma/totems al pasar el cursor"
+	TukuiConfigUILocalization.actionbarrbn = "Número de barras de acción abajo (1 o 2)"
+	TukuiConfigUILocalization.actionbarrn = "Number de barras de acción a la derecha (0, 1, 2 o 3)"
+	TukuiConfigUILocalization.actionbarbuttonsize = "Tamaño de los botones de acción principales"
+	TukuiConfigUILocalization.actionbarbuttonspacing = "Espacio entre los botones de acción principales"
+	TukuiConfigUILocalization.actionbarpetbuttonsize = "Tamaño de los botones de la barra de mascota/cambio de forma/tótems"
+	TukuiConfigUILocalization.actionbarownshdbar = "Usar una barra bacía para 'Danza de las Sombras' (Pícaro) en lugar de la barra de sigilo"
+
 	-- arena
-	TukuiL.option_arena = "Arena"
-	TukuiL.option_arena_st = "Habilitar Rastreador de habilidades de enemigos en Arena"
-	TukuiL.option_arena_uf = "Habilitar TukUI marcos de arena"
-	
-	-- pvp
-	TukuiL.option_pvp = "JcJ"
-	TukuiL.option_pvp_ii = "Habilita Iconos de Interrupción"
- 
-	-- cooldowns
-	TukuiL.option_cooldown = "Tiempo de reutilización"
-	TukuiL.option_cooldown_enable = "Habilitar numeros de tiempo de reutilización en botones"
-	TukuiL.option_cooldown_th = "Colorea el tiempo de reutilización rojo cuando llega al numero X"
- 
+	TukuiConfigUILocalization.arena = "Arena"
+	TukuiConfigUILocalization.arenaunitframes = "Activar marcos de unidad de arena"
+
+	-- Tiempos de Reutilización
+	TukuiConfigUILocalization.cooldown = "Tiempos de Reutilización"
+	TukuiConfigUILocalization.cooldownenable = "Mostrar tiempos de reutilización en botones"
+	TukuiConfigUILocalization.cooldowntreshold = "Colorear en rojo el tiempo de reutilización al alcanzar el valor X"
+
 	-- chat
-	TukuiL.option_chat = "Social"
-	TukuiL.option_chat_enable = "Habilitar Chat de TukUI"
-	TukuiL.option_chat_whispersound = "Habilitar sonido cuando recives un sussuro"
-	TukuiL.option_chat_background = "Habilita el fondo del marco de chat"
-	
-	-- buff
-	TukuiL.option_auras = "Auras"
-	TukuiL.option_auras_player = "Enable Tukui Buff/Debuff Frames"
- 
-	-- buttons
-	TukuiL.option_button_reset = "Resetear"
-	TukuiL.option_button_load = "Aplicar"
-	TukuiL.option_button_close = "Cerrar"
-	TukuiL.option_setsavedsetttings = "Guardar opciones por personje"
-	TukuiL.option_resetchar = "¿Seguro que desea reiniciar las opcioens de este personaje a las por defecto?"
-	TukuiL.option_resetall = "¿Seguro que desea reiniciar TODAS las opciones a las por defecto?"
-	TukuiL.option_perchar = "¿Seguro que desea cambiar la configuración 'por personaje'?"
-	TukuiL.option_makeselection = "Tiene que seleccionar una opción antes de seguir con la configuración."	
+	TukuiConfigUILocalization.chat = "Chat"
+	TukuiConfigUILocalization.chatenable = "Activa el Chat de Tukui"
+	TukuiConfigUILocalization.chatwhispersound = "Reproducir sonido al recibir mensaje privado"
+	TukuiConfigUILocalization.chatbackground = "Habilitar fondo del panel de chat"
+
+	-- Auras
+	TukuiConfigUILocalization.auras = "Auras"
+	TukuiConfigUILocalization.aurasplayer = "Activa los marcos de Beneficios/Prejuicios de Tukui"
+	TukuiConfigUILocalization.aurasconsolidate = "Activa la consolidación de Beneficios"
+	TukuiConfigUILocalization.aurasflash = "Activa la animación intermitente en auras con duración menor a 30 segundos"
+
+	-- botones
+	TukuiConfigUILocalization.option_button_reset = "Reiniciar"
+	TukuiConfigUILocalization.option_button_load = "Aplicar cambios"
+	TukuiConfigUILocalization.option_button_close = "Cerrar"
+	TukuiConfigUILocalization.option_setsavedsetttings = "Ajustes por personaje"
+	TukuiConfigUILocalization.option_resetchar = "¿Estás seguro que quieres reiniciar los ajustes de tu personaje para que coincidan con tus ajustes predeterminados?"
+	TukuiConfigUILocalization.option_resetall = "¿Estás seguro de que quieres reiniciar todos tus ajustes a los predeterminados?"
+	TukuiConfigUILocalization.option_perchar = "¿Estás seguro que quieres activar o desactivar los 'Ajustes por personaje'?"
+	TukuiConfigUILocalization.option_makeselection = "Debes seleccionar una opción antes de continuar con la configuración"
+
 end

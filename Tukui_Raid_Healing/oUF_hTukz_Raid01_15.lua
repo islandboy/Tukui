@@ -11,9 +11,13 @@ if not C["unitframes"].enable == true or C["unitframes"].gridonly == true then r
 local font2 = C["media"].uffont
 local font1 = C["media"].font
 local normTex = C["media"].normTex
+local backdrop = {
+	bgFile = C["media"].blank,
+	insets = {top = -T.mult, left = -T.mult, bottom = -T.mult, right = -T.mult},
+}
 
 local function Shared(self, unit)
-	self.colors = T.oUF_colors
+	self.colors = T.UnitColor
 	self:RegisterForClicks("AnyUp")
 	self:SetScript('OnEnter', UnitFrame_OnEnter)
 	self:SetScript('OnLeave', UnitFrame_OnLeave)
@@ -186,6 +190,18 @@ local function Shared(self, unit)
 			maxOverflow = 1,
 		}
 	end
+	
+	if T.myclass == "PRIEST" and C["unitframes"].weakenedsoulbar then
+		local ws = CreateFrame("StatusBar", self:GetName().."_WeakenedSoul", power)
+		ws:SetAllPoints(power)
+		ws:SetStatusBarTexture(C.media.normTex)
+		ws:GetStatusBarTexture():SetHorizTile(false)
+		ws:SetBackdrop(backdrop)
+		ws:SetBackdropColor(unpack(C.media.backdropcolor))
+		ws:SetStatusBarColor(191/255, 10/255, 10/255)
+		
+		self.WeakenedSoul = ws
+	end
 
 	return self
 end
@@ -194,7 +210,7 @@ oUF:RegisterStyle('TukuiHealR01R15', Shared)
 oUF:Factory(function(self)
 	oUF:SetActiveStyle("TukuiHealR01R15")
 
-	local raid = self:SpawnHeader("oUF_TukuiHealRaid0115", nil, "custom [@raid16,exists] hide;show", 
+	local raid = self:SpawnHeader("TukuiRaidHealer15", nil, "custom [@raid16,exists] hide;show", 
 	'oUF-initialConfigFunction', [[
 		local header = self:GetParent()
 		self:SetWidth(header:GetAttribute('initial-width'))

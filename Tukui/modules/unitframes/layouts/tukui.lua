@@ -6,6 +6,7 @@ ns._Objects = {}
 ns._Headers = {}
 
 local T, C, L = unpack(select(2, ...)) -- Import: T - functions, constants, variables; C - config; L - locales
+
 if not C["unitframes"].enable == true then return end
 
 ------------------------------------------------------------------------
@@ -17,6 +18,7 @@ local font2 = C["media"].font
 local normTex = C["media"].normTex
 local glowTex = C["media"].glowTex
 local bubbleTex = C["media"].bubbleTex
+local bdcr, bdcg, bdcb = unpack(C["media"].bordercolor)
 
 local backdrop = {
 	bgFile = C["media"].blank,
@@ -29,7 +31,7 @@ local backdrop = {
 
 local function Shared(self, unit)
 	-- set our own colors
-	self.colors = T.oUF_colors
+	self.colors = T.UnitColor
 	
 	-- register click
 	self:RegisterForClicks("AnyUp")
@@ -78,7 +80,7 @@ local function Shared(self, unit)
 		end
 		panel:SetFrameLevel(2)
 		panel:SetFrameStrata("MEDIUM")
-		panel:SetBackdropBorderColor(unpack(C["media"].altbordercolor))
+		panel:SetBackdropBorderColor(bdcr * 0.7, bdcg * 0.7, bdcb * 0.7)
 		self.panel = panel
 	
 		-- health bar
@@ -263,7 +265,6 @@ local function Shared(self, unit)
 			status:SetTextColor(0.69, 0.31, 0.31)
 			status:Hide()
 			self.Status = status
-			self:Tag(status, "[pvp]")
 			
 			-- leader icon
 			local Leader = InvFrame:CreateTexture(nil, "OVERLAY")
@@ -338,14 +339,42 @@ local function Shared(self, unit)
 			
 			-- show druid mana when shapeshifted in bear, cat or whatever
 			if T.myclass == "DRUID" then
-				CreateFrame("Frame"):SetScript("OnUpdate", function() T.UpdateDruidMana(self) end)
-				local DruidMana = T.SetFontString(health, font1, 12)
-				DruidMana:SetTextColor(1, 0.49, 0.04)
-				self.DruidMana = DruidMana
+				local DruidManaUpdate = CreateFrame("Frame")
+				DruidManaUpdate:SetScript("OnUpdate", function() T.UpdateDruidManaText(self) end)
+				local DruidManaText = T.SetFontString(health, font1, 12)
+				DruidManaText:SetTextColor(1, 0.49, 0.04)
+				self.DruidManaText = DruidManaText
 			end
 			
 			if C["unitframes"].classbar then
-				if T.myclass == "DRUID" then			
+				if T.myclass == "DRUID" then
+					-- DRUID MANA BAR
+					local DruidManaBackground = CreateFrame("Frame", nil, self)
+					DruidManaBackground:Point("BOTTOMLEFT", self, "TOPLEFT", 0, 1)
+					if T.lowversion then
+						DruidManaBackground:Size(186, 8)
+					else
+						DruidManaBackground:Size(250, 8)
+					end
+					DruidManaBackground:SetFrameLevel(8)
+					DruidManaBackground:SetFrameStrata("MEDIUM")
+					DruidManaBackground:SetTemplate("Default")
+					DruidManaBackground:SetBackdropBorderColor(0,0,0,0)
+					
+					local DruidManaBarStatus = CreateFrame('StatusBar', nil, DruidManaBackground)
+					DruidManaBarStatus:SetPoint('LEFT', DruidManaBackground, 'LEFT', 0, 0)
+					DruidManaBarStatus:SetSize(DruidManaBackground:GetWidth(), DruidManaBackground:GetHeight())
+					DruidManaBarStatus:SetStatusBarTexture(normTex)
+					DruidManaBarStatus:SetStatusBarColor(.30, .52, .90)
+					
+					DruidManaBarStatus:SetScript("OnShow", function() T.DruidBarDisplay(self, false) end)
+					DruidManaBarStatus:SetScript("OnUpdate", function() T.DruidBarDisplay(self, true) end) -- just forcing 1 update on login for buffs/shadow/etc.
+					DruidManaBarStatus:SetScript("OnHide", function() T.DruidBarDisplay(self, false) end)
+					
+					self.DruidManaBackground = DruidManaBackground
+					self.DruidMana = DruidManaBarStatus
+					
+					-- ECLIPSE BAR
 					local eclipseBar = CreateFrame('Frame', nil, self)
 					eclipseBar:Point("BOTTOMLEFT", self, "TOPLEFT", 0, 1)
 					if T.lowversion then
@@ -357,15 +386,14 @@ local function Shared(self, unit)
 					eclipseBar:SetFrameLevel(8)
 					eclipseBar:SetTemplate("Default")
 					eclipseBar:SetBackdropBorderColor(0,0,0,0)
-					eclipseBar:SetScript("OnShow", function() T.EclipseDisplay(self, false) end)
-					eclipseBar:SetScript("OnUpdate", function() T.EclipseDisplay(self, true) end) -- just forcing 1 update on login for buffs/shadow/etc.
-					eclipseBar:SetScript("OnHide", function() T.EclipseDisplay(self, false) end)
+					eclipseBar:SetScript("OnShow", function() T.DruidBarDisplay(self, false) end)
+					eclipseBar:SetScript("OnHide", function() T.DruidBarDisplay(self, false) end)
 					
 					local lunarBar = CreateFrame('StatusBar', nil, eclipseBar)
 					lunarBar:SetPoint('LEFT', eclipseBar, 'LEFT', 0, 0)
 					lunarBar:SetSize(eclipseBar:GetWidth(), eclipseBar:GetHeight())
 					lunarBar:SetStatusBarTexture(normTex)
-					lunarBar:SetStatusBarColor(.30, .52, .90)
+					lunarBar:SetStatusBarColor(.50, .52, .70)
 					eclipseBar.LunarBar = lunarBar
 
 					local solarBar = CreateFrame('StatusBar', nil, eclipseBar)
@@ -555,6 +583,11 @@ local function Shared(self, unit)
 				FlashInfo.ManaLevel:Hide()
 				status:Show()
 				UnitFrame_OnEnter(self) 
+				if UnitIsPVP("Player") then
+					status:SetText("PvP")
+				else
+					status:SetText("")
+				end
 			end)
 			self:SetScript("OnLeave", function(self) 
 				if self.EclipseBar and self.EclipseBar:IsShown() then 
@@ -576,49 +609,39 @@ local function Shared(self, unit)
 			self:Tag(Name, '[Tukui:getnamecolor][Tukui:namelong] [Tukui:diffcolor][level] [shortclassification]')
 			self.Name = Name
 			
-			-- combo points on target
-			local CPoints = {}
-			CPoints.unit = PlayerFrame.unit
-			for i = 1, 5 do
-				CPoints[i] = self:CreateTexture(nil, "OVERLAY")
-				CPoints[i]:Height(12)
-				CPoints[i]:Width(12)
-				CPoints[i]:SetTexture(bubbleTex)
-				if i == 1 then
-					if T.lowversion then
-						CPoints[i]:Point("TOPRIGHT", 15, 1.5)
+			-- standard combo points on target if classbar is disabled
+			if C["unitframes"].classiccombo then
+				local CPoints = {}
+				CPoints.unit = PlayerFrame.unit
+				for i = 1, 5 do
+					CPoints[i] = self:CreateTexture(nil, "OVERLAY")
+					CPoints[i]:Height(12)
+					CPoints[i]:Width(12)
+					CPoints[i]:SetTexture(bubbleTex)
+					if i == 1 then
+						if T.lowversion then
+							CPoints[i]:Point("TOPRIGHT", 15, 1.5)
+						else
+							CPoints[i]:Point("TOPLEFT", -15, 1.5)
+						end
+						CPoints[i]:SetVertexColor(0.69, 0.31, 0.31)
 					else
-						CPoints[i]:Point("TOPLEFT", -15, 1.5)
+						CPoints[i]:Point("TOP", CPoints[i-1], "BOTTOM", 1)
 					end
-					CPoints[i]:SetVertexColor(0.69, 0.31, 0.31)
-				else
-					CPoints[i]:Point("TOP", CPoints[i-1], "BOTTOM", 1)
 				end
+				CPoints[2]:SetVertexColor(0.69, 0.31, 0.31)
+				CPoints[3]:SetVertexColor(0.65, 0.63, 0.35)
+				CPoints[4]:SetVertexColor(0.65, 0.63, 0.35)
+				CPoints[5]:SetVertexColor(0.33, 0.59, 0.33)
+				self.CPoints = CPoints
 			end
-			CPoints[2]:SetVertexColor(0.69, 0.31, 0.31)
-			CPoints[3]:SetVertexColor(0.65, 0.63, 0.35)
-			CPoints[4]:SetVertexColor(0.65, 0.63, 0.35)
-			CPoints[5]:SetVertexColor(0.33, 0.59, 0.33)
-			self.CPoints = CPoints
 		end
 
-		if (unit == "target" and C["unitframes"].targetauras) or (unit == "player" and C["unitframes"].playerauras) then
+		if (unit == "target" and C["unitframes"].targetauras) then
 			local buffs = CreateFrame("Frame", nil, self)
 			local debuffs = CreateFrame("Frame", nil, self)
 			
-			if (T.myclass == "SHAMAN" or T.myclass == "DEATHKNIGHT" or T.myclass == "PALADIN" or T.myclass == "WARLOCK") and (C["unitframes"].playerauras) and (unit == "player") then
-				if T.lowversion then
-					buffs:SetPoint("TOPLEFT", self, "TOPLEFT", 0, 34)
-				else
-					buffs:SetPoint("TOPLEFT", self, "TOPLEFT", 0, 38)
-				end
-			else
-				if T.lowversion then
-					buffs:SetPoint("TOPLEFT", self, "TOPLEFT", 0, 26)
-				else
-					buffs:SetPoint("TOPLEFT", self, "TOPLEFT", 0, 30)
-				end
-			end
+			buffs:SetPoint("BOTTOMLEFT", self, "TOPLEFT", 0, 4)
 			
 			if T.lowversion then
 				buffs:SetHeight(21.5)
@@ -807,7 +830,7 @@ local function Shared(self, unit)
 			panel:CreatePanel("Default", 129, 17, "BOTTOM", self, "BOTTOM", 0, T.Scale(0))
 			panel:SetFrameLevel(2)
 			panel:SetFrameStrata("MEDIUM")
-			panel:SetBackdropBorderColor(unpack(C["media"].altbordercolor))
+			panel:SetBackdropBorderColor(bdcr * 0.7, bdcg * 0.7, bdcb * 0.7)
 			self.panel = panel
 		end
 		
@@ -883,7 +906,7 @@ local function Shared(self, unit)
 			panel:CreatePanel("Default", 129, 17, "BOTTOM", self, "BOTTOM", 0, 0)
 			panel:SetFrameLevel(2)
 			panel:SetFrameStrata("MEDIUM")
-			panel:SetBackdropBorderColor(unpack(C["media"].altbordercolor))
+			panel:SetBackdropBorderColor(bdcr * 0.7, bdcg * 0.7, bdcb * 0.7)
 			self.panel = panel
 		end
 		
@@ -897,7 +920,6 @@ local function Shared(self, unit)
 		health.PostUpdate = T.PostUpdatePetColor
 				
 		self.Health = health
-		self.Health.bg = healthBG
 		
 		local healthBG = health:CreateTexture(nil, 'BORDER')
 		healthBG:SetAllPoints()
@@ -921,6 +943,8 @@ local function Shared(self, unit)
 				health.colorHappiness = true
 			end
 		end
+		
+		self.Health.bg = healthBG
 		
 		-- power
 		local power = CreateFrame('StatusBar', nil, self)
@@ -1103,7 +1127,7 @@ local function Shared(self, unit)
 			
 			castbar.bg = CreateFrame("Frame", nil, castbar)
 			castbar.bg:SetTemplate("Default")
-			castbar.bg:SetBackdropBorderColor(unpack(C["media"].altbordercolor))
+			castbar.bg:SetBackdropBorderColor(bdcr * 0.7, bdcg * 0.7, bdcb * 0.7)
 			castbar.bg:Point("TOPLEFT", -2, 2)
 			castbar.bg:Point("BOTTOMRIGHT", 2, -2)
 			castbar.bg:SetFrameLevel(5)
@@ -1127,7 +1151,7 @@ local function Shared(self, unit)
 			castbar.button:Width(castbar:GetHeight()+4)
 			castbar.button:Point("LEFT", castbar, "RIGHT", 4, 0)
 			castbar.button:SetTemplate("Default")
-			castbar.button:SetBackdropBorderColor(unpack(C["media"].altbordercolor))
+			castbar.button:SetBackdropBorderColor(bdcr * 0.7, bdcg * 0.7, bdcb * 0.7)
 			castbar.icon = castbar.button:CreateTexture(nil, "ARTWORK")
 			castbar.icon:Point("TOPLEFT", castbar.button, 2, -2)
 			castbar.icon:Point("BOTTOMRIGHT", castbar.button, -2, 2)
@@ -1248,7 +1272,7 @@ local function Shared(self, unit)
 			
 			castbar.bg = CreateFrame("Frame", nil, castbar)
 			castbar.bg:SetTemplate("Default")
-			castbar.bg:SetBackdropBorderColor(unpack(C["media"].altbordercolor))
+			castbar.bg:SetBackdropBorderColor(bdcr * 0.7, bdcg * 0.7, bdcb * 0.7)
 			castbar.bg:Point("TOPLEFT", -2, 2)
 			castbar.bg:Point("BOTTOMRIGHT", 2, -2)
 			castbar.bg:SetFrameLevel(5)
@@ -1272,7 +1296,7 @@ local function Shared(self, unit)
 			castbar.button:Width(castbar:GetHeight()+4)
 			castbar.button:Point("LEFT", castbar, "RIGHT", 4, 0)
 			castbar.button:SetTemplate("Default")
-			castbar.button:SetBackdropBorderColor(unpack(C["media"].altbordercolor))
+			castbar.button:SetBackdropBorderColor(bdcr * 0.7, bdcg * 0.7, bdcb * 0.7)
 			castbar.icon = castbar.button:CreateTexture(nil, "ARTWORK")
 			castbar.icon:Point("TOPLEFT", castbar.button, 2, -2)
 			castbar.icon:Point("BOTTOMRIGHT", castbar.button, -2, 2)
@@ -1458,7 +1482,7 @@ local function Shared(self, unit)
 			
 			castbar.bg = CreateFrame("Frame", nil, castbar)
 			castbar.bg:SetTemplate("Default")
-			castbar.bg:SetBackdropBorderColor(unpack(C["media"].altbordercolor))
+			castbar.bg:SetBackdropBorderColor(bdcr * 0.7, bdcg * 0.7, bdcb * 0.7)
 			castbar.bg:Point("TOPLEFT", -2, 2)
 			castbar.bg:Point("BOTTOMRIGHT", 2, -2)
 			castbar.bg:SetFrameLevel(5)
@@ -1482,7 +1506,7 @@ local function Shared(self, unit)
 			castbar.button:Width(castbar:GetHeight()+4)
 			castbar.button:Point("RIGHT", castbar, "LEFT",-4, 0)
 			castbar.button:SetTemplate("Default")
-			castbar.button:SetBackdropBorderColor(unpack(C["media"].altbordercolor))
+			castbar.button:SetBackdropBorderColor(bdcr * 0.7, bdcg * 0.7, bdcb * 0.7)
 			castbar.icon = castbar.button:CreateTexture(nil, "ARTWORK")
 			castbar.icon:Point("TOPLEFT", castbar.button, 2, -2)
 			castbar.icon:Point("BOTTOMRIGHT", castbar.button, -2, 2)
@@ -1683,9 +1707,6 @@ if C["unitframes"].mainassist == true then
 	end
 end
 
--- this is just a fake party to hide Blizzard frame if no Tukui raid layout are loaded.
-local party = oUF:SpawnHeader("oUF_noParty", nil, "party", "showParty", true)
-
 ------------------------------------------------------------------------
 -- Right-Click on unit frames menu. 
 -- Doing this to remove SET_FOCUS eveywhere.
@@ -1693,13 +1714,22 @@ local party = oUF:SpawnHeader("oUF_noParty", nil, "party", "showParty", true)
 -- Main Tank and Main Assist, use /maintank and /mainassist commands.
 ------------------------------------------------------------------------
 
+-- Hunter Dismiss Pet Taint (Blizzard issue)
+local PET_DISMISS = "PET_DISMISS"
+if T.myclass == "HUNTER" then PET_DISMISS = nil end
+
 do
 	UnitPopupMenus["SELF"] = { "PVP_FLAG", "LOOT_METHOD", "LOOT_THRESHOLD", "OPT_OUT_LOOT_TITLE", "LOOT_PROMOTE", "DUNGEON_DIFFICULTY", "RAID_DIFFICULTY", "RESET_INSTANCES", "RAID_TARGET_ICON", "SELECT_ROLE", "CONVERT_TO_PARTY", "CONVERT_TO_RAID", "LEAVE", "CANCEL" };
-	UnitPopupMenus["PET"] = { "PET_PAPERDOLL", "PET_RENAME", "PET_ABANDON", "PET_DISMISS", "CANCEL" };
+	UnitPopupMenus["PET"] = { "PET_PAPERDOLL", "PET_RENAME", "PET_ABANDON", PET_DISMISS, "CANCEL" };
 	UnitPopupMenus["PARTY"] = { "MUTE", "UNMUTE", "PARTY_SILENCE", "PARTY_UNSILENCE", "RAID_SILENCE", "RAID_UNSILENCE", "BATTLEGROUND_SILENCE", "BATTLEGROUND_UNSILENCE", "WHISPER", "PROMOTE", "PROMOTE_GUIDE", "LOOT_PROMOTE", "VOTE_TO_KICK", "UNINVITE", "INSPECT", "ACHIEVEMENTS", "TRADE", "FOLLOW", "DUEL", "RAID_TARGET_ICON", "SELECT_ROLE", "PVP_REPORT_AFK", "RAF_SUMMON", "RAF_GRANT_LEVEL", "CANCEL" }
 	UnitPopupMenus["PLAYER"] = { "WHISPER", "INSPECT", "INVITE", "ACHIEVEMENTS", "TRADE", "FOLLOW", "DUEL", "RAID_TARGET_ICON", "RAF_SUMMON", "RAF_GRANT_LEVEL", "CANCEL" }
-	UnitPopupMenus["RAID_PLAYER"] = { "MUTE", "UNMUTE", "RAID_SILENCE", "RAID_UNSILENCE", "BATTLEGROUND_SILENCE", "BATTLEGROUND_UNSILENCE", "WHISPER", "INSPECT", "ACHIEVEMENTS", "TRADE", "FOLLOW", "DUEL", "RAID_TARGET_ICON", "SELECT_ROLE", "RAID_LEADER", "RAID_PROMOTE", "RAID_DEMOTE", "LOOT_PROMOTE", "RAID_REMOVE", "PVP_REPORT_AFK", "RAF_SUMMON", "RAF_GRANT_LEVEL", "CANCEL" };
-	UnitPopupMenus["RAID"] = { "MUTE", "UNMUTE", "RAID_SILENCE", "RAID_UNSILENCE", "BATTLEGROUND_SILENCE", "BATTLEGROUND_UNSILENCE", "RAID_LEADER", "RAID_PROMOTE", "RAID_MAINTANK", "RAID_MAINASSIST", "RAID_TARGET_ICON", "LOOT_PROMOTE", "RAID_DEMOTE", "RAID_REMOVE", "PVP_REPORT_AFK", "CANCEL" };
+	if T.toc < 40300 then
+		UnitPopupMenus["RAID_PLAYER"] = {"MUTE", "UNMUTE", "RAID_SILENCE", "RAID_UNSILENCE", "BATTLEGROUND_SILENCE", "BATTLEGROUND_UNSILENCE", "WHISPER", "INSPECT", "ACHIEVEMENTS", "TRADE", "FOLLOW", "DUEL", "RAID_TARGET_ICON", "SELECT_ROLE", "RAID_LEADER", "RAID_PROMOTE", "RAID_DEMOTE", "LOOT_PROMOTE", "RAID_REMOVE", "PVP_REPORT_AFK", "RAF_SUMMON", "RAF_GRANT_LEVEL", "CANCEL"}
+		UnitPopupMenus["RAID"] = {"MUTE", "UNMUTE", "RAID_SILENCE", "RAID_UNSILENCE", "BATTLEGROUND_SILENCE", "BATTLEGROUND_UNSILENCE", "RAID_LEADER", "RAID_PROMOTE", "RAID_MAINTANK", "RAID_MAINASSIST", "LOOT_PROMOTE", "RAID_DEMOTE", "RAID_REMOVE", "PVP_REPORT_AFK", "CANCEL"}
+	else
+		UnitPopupMenus["RAID_PLAYER"] = {"MUTE", "UNMUTE", "RAID_SILENCE", "RAID_UNSILENCE", "BATTLEGROUND_SILENCE", "BATTLEGROUND_UNSILENCE", "WHISPER", "INSPECT", "ACHIEVEMENTS", "TRADE", "FOLLOW", "DUEL", "RAID_TARGET_ICON", "SELECT_ROLE", "RAID_LEADER", "RAID_PROMOTE", "RAID_DEMOTE", "LOOT_PROMOTE", "VOTE_TO_KICK", "RAID_REMOVE", "PVP_REPORT_AFK", "RAF_SUMMON", "RAF_GRANT_LEVEL", "CANCEL"}
+		UnitPopupMenus["RAID"] = {"MUTE", "UNMUTE", "RAID_SILENCE", "RAID_UNSILENCE", "BATTLEGROUND_SILENCE", "BATTLEGROUND_UNSILENCE", "RAID_LEADER", "RAID_PROMOTE", "RAID_MAINTANK", "RAID_MAINASSIST", "LOOT_PROMOTE", "RAID_DEMOTE", "VOTE_TO_KICK", "RAID_REMOVE", "PVP_REPORT_AFK", "CANCEL"}
+	end
 	UnitPopupMenus["VEHICLE"] = { "RAID_TARGET_ICON", "VEHICLE_LEAVE", "CANCEL" }
 	UnitPopupMenus["TARGET"] = { "RAID_TARGET_ICON", "CANCEL" }
 	UnitPopupMenus["ARENAENEMY"] = { "CANCEL" }
