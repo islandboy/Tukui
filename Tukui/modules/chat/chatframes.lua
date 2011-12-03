@@ -207,54 +207,6 @@ local function SetupChat(self)
 	ChatTypeInfo.CHANNEL.sticky = 1
 end
 
-<<<<<<< HEAD
-local function SetupChatPosAndFont(self)	
-	for i = 1, NUM_CHAT_WINDOWS do
-		local chat = _G[format("ChatFrame%s", i)]
-		local tab = _G[format("ChatFrame%sTab", i)]
-		local id = chat:GetID()
-		local name = FCF_GetChatWindowInfo(id)
-		local point = GetChatWindowSavedPosition(id)
-		local _, fontSize = FCF_GetChatWindowInfo(id)
-		
-		-- well... tukui font under fontsize 12 is unreadable.
-		if fontSize < 12 then		
-			FCF_SetChatWindowFontSize(nil, chat, 12)
-		else
-			FCF_SetChatWindowFontSize(nil, chat, fontSize)
-		end
-		
-		-- force chat position on #1 and #4, needed if we change ui scale or resolution
-		-- also set original width and height of chatframes 1 and 4 if first time we run tukui.
-		-- doing resize of chat also here for users that hit "cancel" when default installation is show.
-		if i == 1 then
-			chat:Point("BOTTOMLEFT", TukuiInfoLeft, "TOPLEFT", 0, 6)
-			chat:Point("BOTTOMRIGHT", TukuiInfoLeft, "TOPRIGHT", 0, 6)
-			FCF_SavePositionAndDimensions(chat)
-		elseif i == 4 and name == LOOT then
-			if not chat.isDocked then
-                                chat:ClearAllPoints()
-                                chat:Point("BOTTOMRIGHT", TukuiInfoRight, "TOPRIGHT", 0, 6)
-                                chat:Point("BOTTOMLEFT", TukuiInfoRight, "TOPLEFT", 0, 6)
-                                chat:SetJustifyH("LEFT") 
-                                FCF_SavePositionAndDimensions(chat)
-                        end
-                end
-	end
-			
-	-- reposition battle.net popup over chat #1
-	BNToastFrame:HookScript("OnShow", function(self)
-		self:ClearAllPoints()
-		if C.chat.background and TukuiChatBackgroundLeft then
-			self:Point("BOTTOMLEFT", TukuiChatBackgroundLeft, "TOPLEFT", 0, 6)
-		else
-			self:Point("BOTTOMLEFT", ChatFrame1, "TOPLEFT", 0, 6)
-		end
-	end)
-end
-
-=======
->>>>>>> upstream/master
 TukuiChat:RegisterEvent("ADDON_LOADED")
 TukuiChat:SetScript("OnEvent", function(self, event, addon)
 	if addon == "Blizzard_CombatLog" then
@@ -275,8 +227,6 @@ local function SetupTempChat()
 	SetChatStyle(frame)
 end
 hooksecurefunc("FCF_OpenTemporaryWindow", SetupTempChat)
-<<<<<<< HEAD
-=======
 
 -- reposition battle.net popup over chat #1
 BNToastFrame:HookScript("OnShow", function(self)
@@ -324,4 +274,3 @@ T.SetDefaultChatPosition = function(frame)
 	end
 end
 hooksecurefunc("FCF_RestorePositionAndDimensions", T.SetDefaultChatPosition)
->>>>>>> upstream/master
